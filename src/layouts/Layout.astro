@@ -1,0 +1,64 @@
+---
+import '../styles/index.css';
+import '@fontsource-variable/jetbrains-mono';
+import { Header } from '../components/Header';
+import { Footer } from '../components/Footer';
+
+const { title = "Swastick_ | Portfolio", description = "Portfolio of Swastick Ghosh." } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    
+    <meta name="google-site-verification" content="WM6Xef65Rl-MYswNtTRKnzvJYAZ2-43BiiUcuWeSbG8[span_0](start_span)"[span_0](end_span) />
+
+    <title>{title}</title>
+    <meta name="title" content={title} />
+    <meta name="description" content={description} />
+    <meta name="keywords" content="Python Developer, Software Engineer, Automation, Web Scraping, Portfolio, Swastick Ghosh" />
+
+    <meta property="og:site_name" content="Swastick_" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://silvex.pages.dev/" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content="https://silvex.pages.dev/preview-image.jpg" />
+
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://silvex.pages.dev/" />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content="https://silvex.pages.dev/preview-image.jpg" />
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Swastick_",
+      "url": "https://silvex.pages.dev/"
+    }
+    </script>
+  </head>
+  <body>
+    <div class="site-shell" id="top">
+      <Header client:load />
+      
+      <main>
+        <slot /> 
+      </main>
+      
+      <Footer client:load />
+    </div>
+  </body>
+</html>
+

@@ -1,0 +1,23 @@
+Swastick Ghosh | Python Developer & Problem Solver
+
+Swastick Ghosh is a Python developer focusing on clean code, automation, and backend tools. This file provides an overview of his work, skills, projects, and professional profiles.
+
+About
+
+- "About Swastick Ghosh" (https://silvex.pages.dev): Overview of Swastick's background, development philosophy, and areas of expertise.
+
+Skills
+
+- "Technical Skills" (https://silvex.pages.dev/About): Python, web scraping, API integration, Git, object-oriented programming, Linux, and SQL.
+
+Projects
+
+- "Automated Weather Scraper" (https://github.com/username/weather-scraper): Automation utility for retrieving and processing weather data.
+- "Interactive CLI Task Manager" (https://github.com/username/cli-task-manager): Command-line task management application.
+- "Custom Web Scraper" (https://github.com/username/custom-web-scraper): Tool for automated data extraction and processing.
+
+Profiles & Contact
+
+- "GitHub Profile" (https://github.com/username): Swastick's primary GitHub profile and open-source projects.
+- "LinkedIn Profile" (https://linkedin.com/in/username): Professional profile and career information.
+- "Email" (mailto:swastickghosh2010@gmail.com): Direct contact email.

@@ -1,0 +1,20 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { ProjectDetails } from '../../components/ProjectDetails';
+import { projects } from '../../data/content';
+
+export function getStaticPaths() {
+  return projects.map((project) => ({
+    params: { id: project[0] }, // project[0] represents your project ID
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+const [num, type, title, desc, tags] = project;
+---
+
+<Layout title={`${title} | Swastick_`} description={desc}>
+  <ProjectDetails projectData={project} client:load />
+</Layout>
+
