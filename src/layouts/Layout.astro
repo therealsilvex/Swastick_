@@ -3,7 +3,7 @@ import '../styles/index.css';
 import '@fontsource-variable/jetbrains-mono';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
-import { ViewTransitions } from 'astro:transitions';
+import { ClientRouter } from 'astro:transitions'; // 1. Updated import here
 
 const { title = "Swastick_ | Portfolio", description = "Portfolio of Swastick Ghosh." } = Astro.props;
 ---
@@ -51,8 +51,8 @@ const { title = "Swastick_ | Portfolio", description = "Portfolio of Swastick Gh
       "url": "https://silvex.pages.dev/"
     }
     </script>
-    
-    <ViewTransitions />
+
+    <ClientRouter />
   </head>
   <body>
     <div class="site-shell" id="top">
