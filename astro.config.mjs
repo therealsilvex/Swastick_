@@ -1,14 +1,14 @@
-// @ts-check
 import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
-import tailwindcss from '@tailwindcss/vite';
+import tailwind from '@astrojs/tailwind';
+import sitemap from '@astrojs/sitemap';
 
-// https://astro.build/config
 export default defineConfig({
   site: 'https://silvex.pages.dev',
-  prefetch: true,
-  integrations: [react()],
-  vite: {
-    plugins: [tailwindcss()]
-  }
+  integrations: [
+    react(), 
+    tailwind(), 
+    sitemap()
+  ],
 });
+
