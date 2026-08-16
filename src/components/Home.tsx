@@ -1,51 +1,7 @@
-import { useEffect, useState } from "react"
 import { roles, projects, interests } from "../data/content"
 
 export function Home() {
-  const [roleIdx, setRoleIdx] = useState(0)
-  const [typed, setTyped] = useState("")
-  const [isDeleting, setIsDeleting] = useState(false)
-  const [isTyping, setIsTyping] = useState(true) 
-
   const longestRole = roles.reduce((a, b) => a.length > b.length ? a : b, "")
-
-  useEffect(() => {
-    const currentRole = roles[roleIdx]
-    
-    const typeSpeed = 70 + Math.random() * 30 
-    const deleteSpeed = 30
-    const pauseOnFullWord = 2500
-    const pauseOnEmpty = 500
-
-    if (!isDeleting && typed === currentRole) {
-      setIsTyping(false)
-      const timer = setTimeout(() => {
-        setIsDeleting(true)
-        setIsTyping(true)
-      }, pauseOnFullWord)
-      return () => clearTimeout(timer)
-    }
-
-    if (isDeleting && typed === "") {
-      setIsTyping(false)
-      const timer = setTimeout(() => {
-        setIsDeleting(false)
-        setIsTyping(true)
-        setRoleIdx((prev) => (prev + 1) % roles.length)
-      }, pauseOnEmpty)
-      return () => clearTimeout(timer)
-    }
-
-    const timer = setTimeout(() => {
-      setTyped(
-        isDeleting
-          ? currentRole.slice(0, typed.length - 1)
-          : currentRole.slice(0, typed.length + 1)
-      )
-    }, isDeleting ? deleteSpeed : typeSpeed)
-
-    return () => clearTimeout(timer)
-  }, [typed, isDeleting, roleIdx])
 
   return (
     <div className="home-page">
@@ -62,8 +18,8 @@ export function Home() {
                 <span className="cursor">|</span>
               </span>
               <span style={{ gridArea: "1 / 1" }}>
-                <em className="typed">{typed}</em>
-                <span className={`cursor ${!isTyping ? "blinking" : ""}`}>|</span>
+                <em className="typed" id="typed-text"></em>
+                <span className="cursor" id="typed-cursor">|</span>
               </span>
             </span>
           </h1>
@@ -124,7 +80,57 @@ export function Home() {
         <h2>Have a problem<br />worth solving? <em>Let&apos;s talk.</em></h2>
         <a className="email" href="mailto:swastickghosh2010@gmail.com">swastickghosh2010@gmail.com <b>↗</b></a>
       </section>
+
+      {/* Lightning fast vanilla JS replacement for React Hydration */}
+      <script dangerouslySetInnerHTML={{
+        __html: `
+          (function() {
+            const roles = ${JSON.stringify(roles)};
+            let roleIdx = 0;
+            let typed = "";
+            let isDeleting = false;
+            const typedEl = document.getElementById('typed-text');
+            const cursorEl = document.getElementById('typed-cursor');
+
+            function typeLoop() {
+              const currentRole = roles[roleIdx];
+              const typeSpeed = 70 + Math.random() * 30;
+              const deleteSpeed = 30;
+              
+              if (!isDeleting && typed === currentRole) {
+                cursorEl.classList.add('blinking');
+                setTimeout(() => {
+                  isDeleting = true;
+                  cursorEl.classList.remove('blinking');
+                  typeLoop();
+                }, 2500);
+                return;
+              }
+
+              if (isDeleting && typed === "") {
+                cursorEl.classList.add('blinking');
+                setTimeout(() => {
+                  isDeleting = false;
+                  roleIdx = (roleIdx + 1) % roles.length;
+                  cursorEl.classList.remove('blinking');
+                  typeLoop();
+                }, 500);
+                return;
+              }
+
+              typed = isDeleting 
+                ? currentRole.slice(0, typed.length - 1) 
+                : currentRole.slice(0, typed.length + 1);
+              
+              if(typedEl) typedEl.textContent = typed;
+              
+              setTimeout(typeLoop, isDeleting ? deleteSpeed : typeSpeed);
+            }
+            
+            setTimeout(typeLoop, 500);
+          })();
+        `
+      }} />
     </div>
   )
 }
-
