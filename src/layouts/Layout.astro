@@ -3,6 +3,7 @@ import '../styles/index.css';
 import '@fontsource-variable/jetbrains-mono';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
+import { ViewTransitions } from 'astro:transitions';
 
 const { title = "Swastick_ | Portfolio", description = "Portfolio of Swastick Ghosh." } = Astro.props;
 ---
@@ -20,7 +21,7 @@ const { title = "Swastick_ | Portfolio", description = "Portfolio of Swastick Gh
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
     
-    <meta name="google-site-verification" content="WM6Xef65Rl-MYswNtTRKnzvJYAZ2-43BiiUcuWeSbG8[span_0](start_span)"[span_0](end_span) />
+    <meta name="google-site-verification" content="WM6Xef65Rl-MYswNtTRKnzvJYAZ2-43BiiUcuWeSbG8" />
 
     <title>{title}</title>
     <meta name="title" content={title} />
@@ -48,6 +49,8 @@ const { title = "Swastick_ | Portfolio", description = "Portfolio of Swastick Gh
       "url": "https://silvex.pages.dev/"
     }
     </script>
+    
+    <ViewTransitions />
   </head>
   <body>
     <div class="site-shell" id="top">
@@ -57,8 +60,7 @@ const { title = "Swastick_ | Portfolio", description = "Portfolio of Swastick Gh
         <slot /> 
       </main>
       
-      <Footer client:load />
+      <Footer client:visible />
     </div>
   </body>
 </html>
-
