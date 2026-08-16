@@ -3,6 +3,7 @@ import '../styles/index.css';
 import '@fontsource-variable/jetbrains-mono';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
+import { ClientRouter } from 'astro:transitions';
 
 const { title = "Swastick_ | Portfolio", description = "Portfolio of Swastick Ghosh." } = Astro.props;
 ---
@@ -50,6 +51,34 @@ const { title = "Swastick_ | Portfolio", description = "Portfolio of Swastick Gh
       "url": "https://silvex.pages.dev/"
     }
     </script>
+    
+    <!-- 1. Turn the router back on -->
+    <ClientRouter />
+
+    <!-- 2. The magic script to save your React themes from the router -->
+    <script is:inline>
+      function restoreTheme() {
+        const savedTheme = localStorage.getItem("theme") || "blue";
+        const root = document.documentElement;
+        
+        if (savedTheme === "purple") {
+          root.style.setProperty("--accent", "#dd91f0");
+          root.style.setProperty("--mint", "#f39b9d");
+        } else if (savedTheme === "green") {
+          root.style.setProperty("--accent", "#59d99f");
+          root.style.setProperty("--mint", "#f5d56f");
+        } else {
+          root.style.removeProperty("--accent");
+          root.style.removeProperty("--mint");
+        }
+      }
+
+      // Run immediately on first load
+      restoreTheme();
+
+      // Run every time the Astro router swaps the page content
+      document.addEventListener('astro:after-swap', restoreTheme);
+    </script>
   </head>
   <body>
     <div class="site-shell" id="top">
@@ -59,7 +88,7 @@ const { title = "Swastick_ | Portfolio", description = "Portfolio of Swastick Gh
         <slot /> 
       </main>
       
-      <Footer client:visible />
+      <Footer client:load />
     </div>
   </body>
 </html>
