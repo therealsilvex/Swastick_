@@ -52,10 +52,12 @@ const { title = "Swastick_ | Portfolio", description = "Portfolio of Swastick Gh
     }
     </script>
     
-    <!-- 1. Turn the router back on -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital@0;1&display=swap" rel="stylesheet">
+
     <ClientRouter />
 
-    <!-- 2. The magic script to save your React themes from the router -->
     <script is:inline>
       function restoreTheme() {
         const savedTheme = localStorage.getItem("theme") || "blue";
@@ -73,10 +75,7 @@ const { title = "Swastick_ | Portfolio", description = "Portfolio of Swastick Gh
         }
       }
 
-      // Run immediately on first load
       restoreTheme();
-
-      // Run every time the Astro router swaps the page content
       document.addEventListener('astro:after-swap', restoreTheme);
     </script>
   </head>
@@ -88,7 +87,7 @@ const { title = "Swastick_ | Portfolio", description = "Portfolio of Swastick Gh
         <slot /> 
       </main>
       
-      <Footer client:load />
+      <Footer client:visible />
     </div>
   </body>
 </html>
