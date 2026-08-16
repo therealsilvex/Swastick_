@@ -10,11 +10,20 @@ export function Header() {
     // Read the current URL to highlight the active nav link
     setCurrentPath(window.location.pathname)
     
+    let ticking = false;
+    
     const onScroll = () => {
-      const max = document.documentElement.scrollHeight - innerHeight
-      setProgress(max > 0 ? scrollY / max : 0)
-      setScrolled(scrollY > 12)
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const max = document.documentElement.scrollHeight - innerHeight
+          setProgress(max > 0 ? scrollY / max : 0)
+          setScrolled(scrollY > 12)
+          ticking = false;
+        });
+        ticking = true;
+      }
     }
+    
     onScroll()
     window.addEventListener("scroll", onScroll, { passive: true })
     return () => window.removeEventListener("scroll", onScroll)
@@ -49,4 +58,3 @@ export function Header() {
     </>
   )
 }
-
