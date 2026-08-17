@@ -1,6 +1,5 @@
 ---
 import '../styles/index.css';
-import '@fontsource-variable/jetbrains-mono';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
 import { ClientRouter } from 'astro:transitions';
@@ -66,14 +65,11 @@ const previewImage = `${siteUrl}/preview-image.png`;
 
         if (isDesktop) {
           document.body.classList.add('has-custom-cursor');
-          
+
           document.addEventListener('mousemove', (e) => {
             document.documentElement.style.setProperty('--mouse-x', `${e.clientX}px`);
             document.documentElement.style.setProperty('--mouse-y', `${e.clientY}px`);
-            if (cursor) {
-              cursor.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0)`;
-            }
-          });
+          }, { passive: true });
 
           document.querySelectorAll('a, button, .magnetic').forEach(el => {
             el.addEventListener('mouseenter', () => cursor?.classList.add('hovering'));
@@ -81,24 +77,31 @@ const previewImage = `${siteUrl}/preview-image.png`;
           });
 
           document.querySelectorAll('.magnetic').forEach(btn => {
+            let rect = null;
+
+            btn.addEventListener('mouseenter', () => {
+              rect = btn.getBoundingClientRect();
+            });
+
             btn.addEventListener('mousemove', (e) => {
-              const rect = btn.getBoundingClientRect();
+              if (!rect) rect = btn.getBoundingClientRect();
               const x = (e.clientX - rect.left - rect.width / 2) * 0.3;
               const y = (e.clientY - rect.top - rect.height / 2) * 0.3;
               btn.style.transform = `translate3d(${x}px, ${y}px, 0)`;
-            });
+            }, { passive: true });
+
             btn.addEventListener('mouseleave', () => {
-              btn.style.transform = `translate3d(0px, 0px, 0)`;
+              rect = null;
+              btn.style.transform = 'translate3d(0, 0, 0)';
             });
           });
         }
 
-        // Expanded rootMargin to 200px to pre-load elements before they enter the screen
         const observer = new IntersectionObserver((entries, obs) => {
           entries.forEach(entry => {
             if (entry.isIntersecting) {
               entry.target.classList.add('is-in-view');
-              obs.unobserve(entry.target); // Stop observing to save CPU cycles
+              obs.unobserve(entry.target);
             }
           });
         }, { threshold: 0.05, rootMargin: "200px" });
@@ -121,8 +124,7 @@ const previewImage = `${siteUrl}/preview-image.png`;
       }
 
       restoreTheme();
-      document.addEventListener("DOMContentLoaded", initPolish);
-      document.addEventListener("astro:after-swap", () => {
+      document.addEventListener("astro:page-load", () => {
         restoreTheme();
         initPolish();
       });
