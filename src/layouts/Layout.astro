@@ -61,32 +61,56 @@ const previewImage = `${siteUrl}/preview-image.png`;
         if (!window.hasEasterEggs) {
           window.hasEasterEggs = true;
 
-          console.info(
-            "%c ❯ Hello Visitor. \n\n%c Ah, looking under the hood? I respect that.\n If you're a recruiter or fellow developer, let's skip the queue.\n\n ↗ Email me directly: swastickghosh2010@gmail.com\n\n",
-            "color: #6fe3cf; font-size: 18px; font-weight: bold; font-family: monospace;",
-            "color: #a1b3c9; font-size: 13px; font-family: monospace; line-height: 1.6;"
-          );
+          // 1. Added a 1.5-second delay so mobile consoles have time to open and catch the message
+          setTimeout(() => {
+            console.info(
+              "%c ❯ Hello Visitor. \n\n%c Ah, looking under the hood? I respect that.\n If you're a recruiter or fellow developer, let's skip the queue.\n\n ↗ Email me directly: swastickghosh2010@gmail.com\n\n",
+              "color: #6fe3cf; font-size: 18px; font-weight: bold; font-family: monospace;",
+              "color: #a1b3c9; font-size: 13px; font-family: monospace; line-height: 1.6;"
+            );
+          }, 1500);
 
-          const konami = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+          function triggerMatrixMode() {
+            const root = document.documentElement;
+            root.style.setProperty("--accent", "#00ff41");
+            root.style.setProperty("--mint", "#00ff41");
+            document.body.style.background = "#000";
+            
+            console.info("%c ❯ System override engaged.", "color: #00ff41; font-size: 14px; font-weight: bold;");
+            alert("Sequence accepted.");
+            window.open("https://www.youtube.com/watch?v=dQw4w9WgXcQ", "_blank");
+          }
+
+          // 2. Keyboard Konami Code (Forced Lowercase to fix Mobile Auto-Caps)
+          const konami = ['arrowup', 'arrowup', 'arrowdown', 'arrowdown', 'arrowleft', 'arrowright', 'arrowleft', 'arrowright', 'b', 'a'];
           let kIdx = 0;
           
           document.addEventListener('keydown', (e) => {
-            if (e.key === konami[kIdx]) {
+            const key = e.key.toLowerCase(); // Forces "B" to become "b"
+            if (key === konami[kIdx]) {
               kIdx++;
               if (kIdx === konami.length) {
                 kIdx = 0;
-                
-                const root = document.documentElement;
-                root.style.setProperty("--accent", "#00ff41");
-                root.style.setProperty("--mint", "#00ff41");
-                document.body.style.background = "#000";
-                
-                console.info("%c ❯ 30 Lives.", "color: #00ff41; font-size: 14px; font-weight: bold;");
-                alert("30 Lives!");
-                window.open("https://www.youtube.com/watch?v=dQw4w9WgXcQ", "_blank");
+                triggerMatrixMode();
               }
             } else {
-              kIdx = 0;
+              kIdx = (key === konami[0]) ? 1 : 0; // Smart reset
+            }
+          });
+
+          // 3. Mobile Easter Egg Bypass: Rapidly tap the logo 7 times
+          let tapCount = 0;
+          let tapTimer;
+          document.addEventListener('click', (e) => {
+            if (e.target.closest('.brand')) {
+              tapCount++;
+              clearTimeout(tapTimer);
+              tapTimer = setTimeout(() => tapCount = 0, 500); // Reset count if you pause tapping
+              
+              if (tapCount === 7) {
+                tapCount = 0;
+                triggerMatrixMode();
+              }
             }
           });
         }
