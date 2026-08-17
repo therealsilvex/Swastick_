@@ -61,7 +61,7 @@ const previewImage = `${siteUrl}/preview-image.png`;
         if (!window.hasEasterEggs) {
           window.hasEasterEggs = true;
 
-          // 1. Added a 1.5-second delay so mobile consoles have time to open and catch the message
+          // 1. DevTools Welcome Message
           setTimeout(() => {
             console.info(
               "%c ❯ Hello Visitor. \n\n%c Ah, looking under the hood? I respect that.\n If you're a recruiter or fellow developer, let's skip the queue.\n\n ↗ Email me directly: swastickghosh2010@gmail.com\n\n",
@@ -76,17 +76,17 @@ const previewImage = `${siteUrl}/preview-image.png`;
             root.style.setProperty("--mint", "#00ff41");
             document.body.style.background = "#000";
             
-            console.info("%c ❯ System override engaged.", "color: #00ff41; font-size: 14px; font-weight: bold;");
+            console.info("%c ❯ 30 Lives.", "color: #00ff41; font-size: 14px; font-weight: bold;");
             alert("Sequence accepted.");
             window.open("https://www.youtube.com/watch?v=dQw4w9WgXcQ", "_blank");
           }
 
-          // 2. Keyboard Konami Code (Forced Lowercase to fix Mobile Auto-Caps)
+          // 2. Keyboard Konami Code
           const konami = ['arrowup', 'arrowup', 'arrowdown', 'arrowdown', 'arrowleft', 'arrowright', 'arrowleft', 'arrowright', 'b', 'a'];
           let kIdx = 0;
           
           document.addEventListener('keydown', (e) => {
-            const key = e.key.toLowerCase(); // Forces "B" to become "b"
+            const key = e.key.toLowerCase();
             if (key === konami[kIdx]) {
               kIdx++;
               if (kIdx === konami.length) {
@@ -94,7 +94,7 @@ const previewImage = `${siteUrl}/preview-image.png`;
                 triggerMatrixMode();
               }
             } else {
-              kIdx = (key === konami[0]) ? 1 : 0; // Smart reset
+              kIdx = (key === konami[0]) ? 1 : 0;
             }
           });
 
@@ -102,7 +102,15 @@ const previewImage = `${siteUrl}/preview-image.png`;
           let tapCount = 0;
           let tapTimer;
           document.addEventListener('click', (e) => {
-            if (e.target.closest('.brand')) {
+            const brandLink = e.target.closest('.brand');
+            
+            if (brandLink) {
+              // Prevent site reload if we are already on the home page!
+              if (window.location.pathname === '/' || window.location.pathname === '') {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: 'smooth' }); // Just scroll to top instead
+              }
+
               tapCount++;
               clearTimeout(tapTimer);
               tapTimer = setTimeout(() => tapCount = 0, 500); // Reset count if you pause tapping
