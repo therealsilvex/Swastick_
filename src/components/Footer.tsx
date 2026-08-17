@@ -25,6 +25,13 @@ export function Footer() {
   }
 
   const toggleTheme = () => {
+    // ------ ESCAPE THE EASTER EGG ------
+    if (typeof window !== "undefined") {
+      sessionStorage.removeItem("retroMode");
+      document.documentElement.classList.remove("retro-mode");
+      (window as any).isRetroMode = false; // Safely resets the trigger
+    }
+
     let nextTheme = "blue"
     if (theme === "blue") nextTheme = "purple"
     else if (theme === "purple") nextTheme = "green"
