@@ -6,6 +6,9 @@ import sitemap from '@astrojs/sitemap';
 export default defineConfig({
   site: 'https://silvex.pages.dev',
   prefetch: true,
+  build: {
+    inlineStylesheets: 'always',
+  },
   integrations: [
     react(),
     sitemap({
