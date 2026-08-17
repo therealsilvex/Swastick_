@@ -7,7 +7,14 @@ export default defineConfig({
   site: 'https://silvex.pages.dev',
   prefetch: true,
   integrations: [
-    react(), 
-    sitemap()
+    react(),
+    sitemap({
+      namespaces: {
+        news: false,
+        xhtml: false,
+        image: false,
+        video: false,
+      },
+    }),
   ],
 });
