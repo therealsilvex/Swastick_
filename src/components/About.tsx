@@ -40,7 +40,7 @@ export function About() {
         )
         break
       case "sudo":
-        response = "Haha, Nice Try!"
+        response = "Do you use Arch btw?"
         break
       case "echo":
         response = cmdParts.slice(1).join(" ") || " "
@@ -91,14 +91,9 @@ export function About() {
 
   // ------ Terminal Scrolling ------
   useEffect(() => {
-    requestAnimationFrame(() => {
-      if (cliBodyRef.current) {
-        cliBodyRef.current.scrollTo({
-          top: cliBodyRef.current.scrollHeight,
-          behavior: "smooth"
-        })
-      }
-    })
+    if (cliBodyRef.current) {
+      cliBodyRef.current.scrollTop = cliBodyRef.current.scrollHeight;
+    }
   }, [logs])
 
   return (
@@ -150,7 +145,7 @@ export function About() {
       </div>
 
       {/* ------ Principles ------ */}
-      <section className="principles-section scroll-reveal delay-2" style={{ marginBottom: "80px" }}>
+      <section className="principles-section scroll-reveal delay-1" style={{ marginBottom: "80px" }}>
         <h2 style={{ fontSize: "28px", color: "#e8edf4", marginBottom: "32px", fontWeight: 400 }}>Principles</h2>
         <div className="principles-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "32px" }}>
           {principles.map(([icon, title, desc]) => (
@@ -164,7 +159,7 @@ export function About() {
       </section>
 
       {/* ------ Toolkit ------ */}
-      <section className="toolkit-section scroll-reveal delay-2" style={{ marginBottom: "80px" }}>
+      <section className="toolkit-section scroll-reveal delay-1" style={{ marginBottom: "80px" }}>
         <h2 style={{ fontSize: "28px", color: "#e8edf4", marginBottom: "32px", fontWeight: 400 }}>Toolkit</h2>
         <div className="toolkit-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "24px" }}>
           {toolkit.map(([num, title, items]) => (
@@ -178,7 +173,7 @@ export function About() {
       </section>
 
       {/* ------ Roadmap ------ */}
-      <section className="roadmap-section scroll-reveal delay-3" style={{ marginBottom: "80px" }}>
+      <section className="roadmap-section scroll-reveal delay-1" style={{ marginBottom: "80px" }}>
         <h2 style={{ fontSize: "28px", color: "#e8edf4", marginBottom: "32px", fontWeight: 400 }}>Roadmap</h2>
         <div className="roadmap-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "24px" }}>
           {roadmap.map(([num, phase, title, text, pct]) => (

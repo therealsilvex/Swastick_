@@ -371,6 +371,7 @@ footer a:hover { transform: translateY(-1px); }
 .cli-output { color: #a1b3c9; margin-bottom: 12px; white-space: pre-wrap; line-height: 1.6; }
 .cli-input-form { display: flex; align-items: center; color: var(--mint); }
 .cli-input { background: transparent; border: none; color: #fff; font-family: inherit; font-size: 14px; outline: none; width: 100%; }
+.cli-input:focus, .cli-input:focus-visible { outline: none !important; border: none !important; box-shadow: none !important; }
 
 .filter-bar { display: flex; gap: 12px; flex-wrap: wrap; }
 .filter-btn { background: #111a28; border: 1px solid #22303e; color: #a1b3c9; padding: 8px 16px; border-radius: 20px; cursor: pointer; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); font-size: 13px; font-family: inherit; }
@@ -439,7 +440,7 @@ em {
 .typed { background: linear-gradient(90deg, var(--accent), var(--mint)); -webkit-background-clip: text; }
 
 .shimmer-text { 
-  background: linear-gradient(90deg, var(--accent) 0%, #ffffff 50%, var(--mint) 100%); 
+  background: linear-gradient(90deg, var(--accent) 0%, #a9c8ff 25%, var(--mint) 50%, #a9c8ff 75%, var(--accent) 100%); 
   background-size: 200% auto;
   color: transparent;
   -webkit-background-clip: text;

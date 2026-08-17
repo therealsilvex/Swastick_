@@ -121,7 +121,7 @@ export function Home() {
       </section>
 
       {/* ------ Interests Ticker ------ */}
-      <section className="ticker scroll-reveal delay-2" aria-label="Interests">
+      <section className="ticker scroll-reveal delay-1" aria-label="Interests">
         <div className="ticker-track">
           {[0, 1].map(copy => (
             <div className="ticker-group" key={copy} aria-hidden={copy === 1}>
@@ -134,7 +134,7 @@ export function Home() {
       </section>
 
       {/* ------ Featured Projects ------ */}
-      <section className="section-pad work-section scroll-reveal delay-2">
+      <section className="section-pad work-section scroll-reveal delay-1">
         <div className="section-heading">
           <div>
             <p className="eyebrow">Featured projects</p>
@@ -170,7 +170,7 @@ export function Home() {
       </section>
 
       {/* ------ Contact Section ------ */}
-      <section className="contact section-pad scroll-reveal delay-3" id="contact" style={{ borderTop: "1px solid #1d2c3b" }}>
+      <section className="contact section-pad scroll-reveal delay-1" id="contact" style={{ borderTop: "1px solid #1d2c3b" }}>
         <p className="eyebrow">Start a conversation</p>
         <h2>Have a problem<br />worth solving? <em>Let&apos;s talk.</em></h2>
         <a className="email email-copy magnetic" href="mailto:swastickghosh2010@gmail.com" style={{ display: "inline-block" }}>
