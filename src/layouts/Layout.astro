@@ -5,7 +5,13 @@ import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
 import { ClientRouter } from 'astro:transitions';
 
-const { title = "Swastick_ | Portfolio", description = "Portfolio of Swastick Ghosh." } = Astro.props;
+const {
+  title = "Swastick_ | Portfolio",
+  description = "Portfolio of Swastick Ghosh."
+} = Astro.props;
+
+const siteUrl = "https://silvex.pages.dev";
+const previewImage = `${siteUrl}/preview-image.png`;
 ---
 
 <!doctype html>
@@ -13,56 +19,111 @@ const { title = "Swastick_ | Portfolio", description = "Portfolio of Swastick Gh
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    
+
+    <!-- Icons -->
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
-    
-    <meta name="google-site-verification" content="WM6Xef65Rl-MYswNtTRKnzvJYAZ2-43BiiUcuWeSbG8" />
 
+    <!-- Google verification -->
+    <meta
+      name="google-site-verification"
+      content="WM6Xef65Rl-MYswNtTRKnzvJYAZ2-43BiiUcuWeSbG8"
+    />
+
+    <!-- Basic SEO -->
     <title>{title}</title>
     <meta name="title" content={title} />
     <meta name="description" content={description} />
-    <meta name="keywords" content="Python Developer, Software Engineer, Automation, Web Scraping, Portfolio, Swastick Ghosh" />
+    <meta
+      name="keywords"
+      content="Python Developer, Software Engineer, Automation, Web Scraping, Portfolio, Swastick Ghosh"
+    />
 
-    <link rel="canonical" href={`https://silvex.pages.dev${Astro.url.pathname}`} />
+    <link
+      rel="canonical"
+      href={`${siteUrl}${Astro.url.pathname}`}
+    />
 
+    <!-- Open Graph -->
     <meta property="og:site_name" content="Swastick_" />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://silvex.pages.dev/" />
+    <meta property="og:url" content={siteUrl} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content="https://silvex.pages.dev/preview-image.jpg" />
+    <meta property="og:image" content={previewImage} />
 
+    <!-- Twitter / X -->
     <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content="https://silvex.pages.dev/" />
+    <meta property="twitter:url" content={siteUrl} />
     <meta property="twitter:title" content={title} />
     <meta property="twitter:description" content={description} />
-    <meta property="twitter:image" content="https://silvex.pages.dev/preview-image.jpg" />
+    <meta property="twitter:image" content={previewImage} />
 
+    <!-- Structured Data -->
     <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      "name": "Swastick_",
-      "url": "https://silvex.pages.dev/"
-    }
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebSite",
+            "@id": `${siteUrl}/#website`,
+            "url": `${siteUrl}/`,
+            "name": "Swastick_",
+            "alternateName": "Swastick Ghosh",
+            "description": "Personal portfolio and developer website of Swastick Ghosh.",
+            "inLanguage": "en",
+            "image": "${previewImage}",
+            "publisher": {
+              "@id": `${siteUrl}/#developer`
+            }
+          },
+          {
+            "@type": "Person",
+            "@id": `${siteUrl}/#developer`,
+            "name": "Swastick Ghosh",
+            "alternateName": "Swastick_",
+            "url": `${siteUrl}/`,
+            "image": "${previewImage}",
+            "jobTitle": "Python Developer",
+            "description": "Python developer focused on clean code, automation, backend tools, and problem solving.",
+            "sameAs": [
+              "https://github.com/therealsilvex"
+            ],
+            "knowsAbout": [
+              "Python",
+              "Software Development",
+              "Backend Development",
+              "Automation",
+              "Web Scraping",
+              "Problem Solving",
+              "Developer Tooling"
+            ]
+          }
+        ]
+      }
     </script>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital@0;1&display=swap" rel="stylesheet">
 
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Merriweather:ital@0;1&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Astro Client Router -->
     <ClientRouter />
 
+    <!-- Theme restoration -->
     <script is:inline>
       function restoreTheme() {
         const savedTheme = localStorage.getItem("theme") || "blue";
         const root = document.documentElement;
-        
+
         if (savedTheme === "purple") {
           root.style.setProperty("--accent", "#dd91f0");
           root.style.setProperty("--mint", "#f39b9d");
@@ -76,17 +137,18 @@ const { title = "Swastick_ | Portfolio", description = "Portfolio of Swastick Gh
       }
 
       restoreTheme();
-      document.addEventListener('astro:after-swap', restoreTheme);
+      document.addEventListener("astro:after-swap", restoreTheme);
     </script>
   </head>
+
   <body>
     <div class="site-shell" id="top">
       <Header client:load />
-      
+
       <main>
-        <slot /> 
+        <slot />
       </main>
-      
+
       <Footer client:visible />
     </div>
   </body>
