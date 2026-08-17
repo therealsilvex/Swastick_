@@ -22,21 +22,17 @@ const previewImage = `${siteUrl}/preview-image.png`;
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- ------ Icons ------ -->
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
     
-    <!-- ------ Verification ------ -->
     <meta name="google-site-verification" content="WM6Xef65Rl-MYswNtTRKnzvJYAZ2-43BiiUcuWeSbG8" />
     
-    <!-- ------ SEO ------ -->
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={`${siteUrl}${Astro.url.pathname}`} />
 
-    <!-- ------ Open Graph ------ -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content={`${siteUrl}${Astro.url.pathname}`} />
     <meta property="og:title" content={title} />
@@ -45,7 +41,6 @@ const previewImage = `${siteUrl}/preview-image.png`;
     <meta property="og:image:alt" content="Swastick_ | Python Developer & Problem Solver" />
     <meta property="og:site_name" content="Swastick_" />
 
-    <!-- ------ Twitter / X ------ -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
@@ -54,14 +49,11 @@ const previewImage = `${siteUrl}/preview-image.png`;
 
     <ClientRouter />
 
-    <!-- ------ Global Scripts ------ -->
     <script is:inline>
-      // ------ Easter Eggs ------
       function initEasterEggs() {
         if (!window.hasEasterEggs) {
           window.hasEasterEggs = true;
 
-          // 1. DevTools Welcome Message
           setTimeout(() => {
             console.info(
               "%c ❯ Hello Visitor. \n\n%c Ah, looking under the hood? I respect that.\n If you're a recruiter or fellow developer, let's skip the queue.\n\n ↗ Email me directly: swastickghosh2010@gmail.com\n\n",
@@ -70,18 +62,29 @@ const previewImage = `${siteUrl}/preview-image.png`;
             );
           }, 1500);
 
-          function triggerMatrixMode() {
-            const root = document.documentElement;
-            root.style.setProperty("--accent", "#00ff41");
-            root.style.setProperty("--mint", "#00ff41");
-            document.body.style.background = "#000";
+          function triggerRetroMode() {
+            if (window.isRetroMode) return;
+            window.isRetroMode = true;
+
+            const style = document.createElement('style');
+            style.innerHTML = `
+              :root, body, .site-shell {
+                --accent: #ff5500 !important; 
+                --mint: #00eaff !important; 
+                background-color: #000000 !important; 
+                background-image: none !important;
+              }
+              * {
+                transition: background-color 0.5s ease, color 0.5s ease !important;
+              }
+            `;
+            document.head.appendChild(style);
             
-            console.info("%c ❯ 30 Lives.", "color: #00ff41; font-size: 14px; font-weight: bold;");
-            alert("Sequence accepted.");
+            console.info("%c ❯ Power meter maximized. Speed Up, Missile, Double, Laser, Option, Shield.", "color: #ff5500; font-size: 14px; font-weight: bold;");
+            alert("All Power-Ups Equipped!");
             window.open("https://www.youtube.com/watch?v=dQw4w9WgXcQ", "_blank");
           }
 
-          // 2. Keyboard Konami Code
           const konami = ['arrowup', 'arrowup', 'arrowdown', 'arrowdown', 'arrowleft', 'arrowright', 'arrowleft', 'arrowright', 'b', 'a'];
           let kIdx = 0;
           
@@ -91,41 +94,40 @@ const previewImage = `${siteUrl}/preview-image.png`;
               kIdx++;
               if (kIdx === konami.length) {
                 kIdx = 0;
-                triggerMatrixMode();
+                triggerRetroMode();
               }
             } else {
               kIdx = (key === konami[0]) ? 1 : 0;
             }
           });
 
-          // 3. Mobile Easter Egg Bypass: Rapidly tap the logo 7 times
           let tapCount = 0;
           let tapTimer;
           document.addEventListener('click', (e) => {
             const brandLink = e.target.closest('.brand');
             
             if (brandLink) {
-              // Prevent site reload if we are already on the home page!
               if (window.location.pathname === '/' || window.location.pathname === '') {
                 e.preventDefault();
-                window.scrollTo({ top: 0, behavior: 'smooth' }); // Just scroll to top instead
+                window.scrollTo({ top: 0, behavior: 'smooth' }); 
               }
 
               tapCount++;
               clearTimeout(tapTimer);
-              tapTimer = setTimeout(() => tapCount = 0, 500); // Reset count if you pause tapping
+              tapTimer = setTimeout(() => tapCount = 0, 500);
               
               if (tapCount === 7) {
                 tapCount = 0;
-                triggerMatrixMode();
+                triggerRetroMode();
               }
             }
           });
         }
       }
 
-      // ------ Theme Initialization ------
       function restoreTheme() {
+        if (window.isRetroMode) return;
+
         const savedTheme = localStorage.getItem("theme") || "blue";
         const root = document.documentElement;
 
@@ -141,7 +143,6 @@ const previewImage = `${siteUrl}/preview-image.png`;
         }
       }
       
-      // ------ UI Engine ------
       function initPolish() {
         const cursor = document.getElementById('custom-cursor');
         const isDesktop = window.matchMedia("(pointer: fine)").matches;
@@ -209,10 +210,8 @@ const previewImage = `${siteUrl}/preview-image.png`;
   </head>
 
   <body>
-    <!-- ------ Custom Cursor ------ -->
     <div id="custom-cursor"></div>
     
-    <!-- ------ Application Root ------ -->
     <div class="site-shell" id="top">
       <Header pathname={Astro.url.pathname} client:load />
       <main>
