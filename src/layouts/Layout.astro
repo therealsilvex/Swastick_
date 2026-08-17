@@ -22,17 +22,21 @@ const previewImage = `${siteUrl}/preview-image.png`;
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+    <!-- ------ Icons ------ -->
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
     
+    <!-- ------ Verification ------ -->
     <meta name="google-site-verification" content="WM6Xef65Rl-MYswNtTRKnzvJYAZ2-43BiiUcuWeSbG8" />
     
+    <!-- ------ SEO ------ -->
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={`${siteUrl}${Astro.url.pathname}`} />
 
+    <!-- ------ Open Graph ------ -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content={`${siteUrl}${Astro.url.pathname}`} />
     <meta property="og:title" content={title} />
@@ -41,6 +45,7 @@ const previewImage = `${siteUrl}/preview-image.png`;
     <meta property="og:image:alt" content="Swastick_ | Python Developer & Problem Solver" />
     <meta property="og:site_name" content="Swastick_" />
 
+    <!-- ------ Twitter / X ------ -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
@@ -49,11 +54,14 @@ const previewImage = `${siteUrl}/preview-image.png`;
 
     <ClientRouter />
 
+    <!-- ------ Global Scripts ------ -->
     <script is:inline>
+      // ------ Easter Eggs ------
       function initEasterEggs() {
         if (!window.hasEasterEggs) {
           window.hasEasterEggs = true;
 
+          // 1. DevTools Welcome Message
           setTimeout(() => {
             console.info(
               "%c ❯ Hello Visitor. \n\n%c Ah, looking under the hood? I respect that.\n If you're a recruiter or fellow developer, let's skip the queue.\n\n ↗ Email me directly: swastickghosh2010@gmail.com\n\n",
@@ -63,28 +71,18 @@ const previewImage = `${siteUrl}/preview-image.png`;
           }, 1500);
 
           function triggerRetroMode() {
-            if (window.isRetroMode) return;
-            window.isRetroMode = true;
-
-            const style = document.createElement('style');
-            style.innerHTML = `
-              :root, body, .site-shell {
-                --accent: #ff5500 !important; 
-                --mint: #00eaff !important; 
-                background-color: #000000 !important; 
-                background-image: none !important;
-              }
-              * {
-                transition: background-color 0.5s ease, color 0.5s ease !important;
-              }
-            `;
-            document.head.appendChild(style);
+            if (sessionStorage.getItem("retroMode") === "true") return; // Prevent double firing
             
-            console.info("%c ❯ Power meter maximized. Speed Up, Missile, Double, Laser, Option, Shield.", "color: #ff5500; font-size: 14px; font-weight: bold;");
+            // Lock state into session storage so it survives page changes
+            sessionStorage.setItem("retroMode", "true");
+            document.documentElement.classList.add("retro-mode");
+            
+            console.info("%c ❯ Power meter maximized. Speed Up, Missile, Double, Laser, Option, Shield.", "color: #ff00ff; font-size: 14px; font-weight: bold;");
             alert("All Power-Ups Equipped!");
             window.open("https://www.youtube.com/watch?v=dQw4w9WgXcQ", "_blank");
           }
 
+          // 2. Keyboard Konami Code
           const konami = ['arrowup', 'arrowup', 'arrowdown', 'arrowdown', 'arrowleft', 'arrowright', 'arrowleft', 'arrowright', 'b', 'a'];
           let kIdx = 0;
           
@@ -101,6 +99,7 @@ const previewImage = `${siteUrl}/preview-image.png`;
             }
           });
 
+          // 3. Mobile Easter Egg Bypass: Rapidly tap the logo 7 times
           let tapCount = 0;
           let tapTimer;
           document.addEventListener('click', (e) => {
@@ -125,8 +124,13 @@ const previewImage = `${siteUrl}/preview-image.png`;
         }
       }
 
+      // ------ Theme Initialization ------
       function restoreTheme() {
-        if (window.isRetroMode) return;
+        // If the Easter Egg is active, re-apply the class and block the normal themes
+        if (sessionStorage.getItem("retroMode") === "true") {
+          document.documentElement.classList.add("retro-mode");
+          return; 
+        }
 
         const savedTheme = localStorage.getItem("theme") || "blue";
         const root = document.documentElement;
@@ -143,6 +147,7 @@ const previewImage = `${siteUrl}/preview-image.png`;
         }
       }
       
+      // ------ UI Engine ------
       function initPolish() {
         const cursor = document.getElementById('custom-cursor');
         const isDesktop = window.matchMedia("(pointer: fine)").matches;
@@ -210,8 +215,10 @@ const previewImage = `${siteUrl}/preview-image.png`;
   </head>
 
   <body>
+    <!-- ------ Custom Cursor ------ -->
     <div id="custom-cursor"></div>
     
+    <!-- ------ Application Root ------ -->
     <div class="site-shell" id="top">
       <Header pathname={Astro.url.pathname} client:load />
       <main>
@@ -221,3 +228,46 @@ const previewImage = `${siteUrl}/preview-image.png`;
     </div>
   </body>
 </html>
+
+<style is:global>
+  /* ------ Drastic Easter Egg Overrides ------ */
+  html.retro-mode body, 
+  html.retro-mode .site-shell {
+    background: #000 !important;
+    background-image: none !important;
+  }
+  html.retro-mode {
+    --accent: #ff00ff !important; 
+    --mint: #39ff14 !important;   
+  }
+  
+  /* Force all standard text to neon green */
+  html.retro-mode p, 
+  html.retro-mode h1, 
+  html.retro-mode h2, 
+  html.retro-mode h3, 
+  html.retro-mode span:not(.brand-prompt):not(.brand-cursor):not(.status-dot), 
+  html.retro-mode div,
+  html.retro-mode a {
+    color: #39ff14 !important; 
+    text-shadow: 0 0 6px rgba(57, 255, 20, 0.4) !important;
+  }
+  
+  html.retro-mode .site-header {
+    background: #000 !important;
+    border-bottom-color: #ff00ff !important;
+  }
+  
+  /* Force cards and code blocks to match */
+  html.retro-mode .project-card,
+  html.retro-mode .code-window,
+  html.retro-mode .cli-terminal {
+    background: #050505 !important;
+    border-color: #ff00ff !important;
+    box-shadow: 0 0 15px rgba(255, 0, 255, 0.2) !important;
+  }
+  
+  html.retro-mode .progress-bar {
+    background: linear-gradient(90deg, #ff00ff, #39ff14) !important;
+  }
+</style>
