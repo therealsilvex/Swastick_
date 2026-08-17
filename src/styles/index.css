@@ -484,4 +484,7 @@ em {
     scroll-behavior: auto !important;
   }
   .scroll-reveal {
-    opac
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
