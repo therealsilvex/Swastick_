@@ -6,6 +6,7 @@ export function Home() {
   const [typedText, setTypedText] = useState("")
   const [isBlinking, setIsBlinking] = useState(false)
 
+  // ------ Role Typing Animation ------
   useEffect(() => {
     let roleIdx = 0
     let currentText = ""
@@ -14,7 +15,6 @@ export function Home() {
 
     const typeLoop = () => {
       const currentRole = roles[roleIdx]
-
       if (!currentRole) return
 
       const typeSpeed = 70 + Math.random() * 30
@@ -22,26 +22,22 @@ export function Home() {
 
       if (!isDeleting && currentText === currentRole) {
         setIsBlinking(true)
-
         timeoutId = setTimeout(() => {
           isDeleting = true
           setIsBlinking(false)
           typeLoop()
         }, 2500)
-
         return
       }
 
       if (isDeleting && currentText === "") {
         setIsBlinking(true)
-
         timeoutId = setTimeout(() => {
           isDeleting = false
           roleIdx = (roleIdx + 1) % roles.length
           setIsBlinking(false)
           typeLoop()
         }, 500)
-
         return
       }
 
@@ -50,55 +46,34 @@ export function Home() {
         : currentRole.slice(0, currentText.length + 1)
 
       setTypedText(currentText)
-
-      timeoutId = setTimeout(
-        typeLoop,
-        isDeleting ? deleteSpeed : typeSpeed
-      )
+      timeoutId = setTimeout(typeLoop, isDeleting ? deleteSpeed : typeSpeed)
     }
 
     timeoutId = setTimeout(typeLoop, 500)
-
     return () => clearTimeout(timeoutId)
   }, [])
 
   return (
     <div className="home-page">
+      
+      {/* ------ Hero Section ------ */}
       <section className="hero section-pad">
         <div className="hero-glow" aria-hidden="true" />
 
-        <div className="hero-copy">
+        <div className="hero-copy fade-up">
           <p className="eyebrow"><i />Actively building & learning</p>
 
           <h1>
             Hi, I&apos;m Swastick.<br />
-
-            <span
-              style={{
-                display: "inline-grid",
-                gridTemplateColumns: "1fr",
-                alignItems: "start",
-                textAlign: "left"
-              }}
-            >
-              <span
-                style={{
-                  gridArea: "1 / 1",
-                  visibility: "hidden",
-                  opacity: 0,
-                  pointerEvents: "none",
-                  userSelect: "none"
-                }}
-              >
+            <span style={{ display: "inline-grid", gridTemplateColumns: "1fr", alignItems: "start", textAlign: "left" }}>
+              <span style={{ gridArea: "1 / 1", visibility: "hidden", opacity: 0, pointerEvents: "none", userSelect: "none" }}>
                 <em className="typed">{longestRole}</em>
                 <span className="cursor">|</span>
               </span>
 
               <span style={{ gridArea: "1 / 1" }}>
                 <em className="typed">{typedText}</em>
-                <span className={`cursor ${isBlinking ? "blinking" : ""}`}>
-                  |
-                </span>
+                <span className={`cursor ${isBlinking ? "blinking" : ""}`}>|</span>
               </span>
             </span>
           </h1>
@@ -109,72 +84,30 @@ export function Home() {
             Python web backends.
           </p>
 
-          <div
-            className="hero-actions"
-            style={{
-              marginTop: "32px",
-              display: "flex",
-              gap: "24px",
-              alignItems: "center"
-            }}
-          >
-            <a
-              className="primary-button"
-              href="/projects"
-              style={{ display: "inline-block" }}
-            >
+          <div className="hero-actions" style={{ marginTop: "32px", display: "flex", gap: "24px", alignItems: "center" }}>
+            <a className="primary-button" data-astro-prefetch href="/projects" style={{ display: "inline-block" }}>
               See my work <b>↓</b>
             </a>
-
-            <a className="text-button" href="/about">
+            <a className="text-button" data-astro-prefetch href="/about">
               About Me <b>↗</b>
             </a>
           </div>
         </div>
 
-        <aside className="code-window float" aria-label="Developer profile">
+        <aside className="code-window float fade-up delay-1" aria-label="Developer profile">
           <div className="code-top">
-            <span className="dots">
-              <i />
-              <i />
-              <i />
-            </span>
+            <span className="dots"><i /><i /><i /></span>
             <span>swastick.py</span>
             <span className="live-pill">● live</span>
           </div>
 
           <div className="code-content">
             <p className="comment"># the short version</p>
-
-            <p>
-              <b className="purple">class</b>{" "}
-              <b className="blue">Developer</b>:
-            </p>
-
-            <p className="indent">
-              <b className="purple">def</b>{" "}
-              <span className="blue">focus</span>(self):
-            </p>
-
-            <p className="indent2">
-              <b className="purple">return</b>{" "}
-              <span className="yellow">
-                &quot;Python + problem<br />solving&quot;
-              </span>
-            </p>
-
-            <p className="indent">
-              <b className="purple">def</b>{" "}
-              <span className="blue">mindset</span>(self):
-            </p>
-
-            <p className="indent2">
-              <b className="purple">return</b>{" "}
-              <span className="pink">
-                &quot;always<br />learning&quot;
-              </span>
-              <span className="cursor blinking">_</span>
-            </p>
+            <p><b className="purple">class</b> <b className="blue">Developer</b>:</p>
+            <p className="indent"><b className="purple">def</b> <span className="blue">focus</span>(self):</p>
+            <p className="indent2"><b className="purple">return</b> <span className="yellow">&quot;Python + problem<br />solving&quot;</span></p>
+            <p className="indent"><b className="purple">def</b> <span className="blue">mindset</span>(self):</p>
+            <p className="indent2"><b className="purple">return</b> <span className="pink">&quot;always<br />learning&quot;</span><span className="cursor blinking">_</span></p>
           </div>
 
           <div className="code-footer">
@@ -183,14 +116,11 @@ export function Home() {
         </aside>
       </section>
 
-      <section className="ticker" aria-label="Interests">
+      {/* ------ Interests Ticker ------ */}
+      <section className="ticker fade-up delay-2" aria-label="Interests">
         <div className="ticker-track">
           {[0, 1].map(copy => (
-            <div
-              className="ticker-group"
-              key={copy}
-              aria-hidden={copy === 1}
-            >
+            <div className="ticker-group" key={copy} aria-hidden={copy === 1}>
               {interests.map(item => (
                 <span key={item}>{item}</span>
               ))}
@@ -199,39 +129,28 @@ export function Home() {
         </div>
       </section>
 
-      <section className="section-pad work-section">
+      {/* ------ Featured Projects ------ */}
+      <section className="section-pad work-section fade-up delay-2">
         <div className="section-heading">
           <div>
             <p className="eyebrow">Featured projects</p>
-            <h2>
-              Small tools. <em>Real thinking.</em>
-            </h2>
+            <h2>Small tools. <em>Real thinking.</em></h2>
           </div>
-
-          <p>
-            Each project is a chance to turn an idea into working code, then
-            improve the details that make it dependable.
-          </p>
+          <p>Each project is a chance to turn an idea into working code, then improve the details that make it dependable.</p>
         </div>
 
         <div className="project-grid">
           {projects.slice(0, 3).map(([number, type, title, text, tags]) => (
-            <article className="project-card" key={number}>
+            <article className="project-card" key={number as string}>
               <div className="card-top">
-                <span>{number}</span>
-                <a href={`/projects/${number}`}>↗</a>
+                <span>{number as string}</span>
+                <a data-astro-prefetch href={`/projects/${number}`}>↗</a>
               </div>
-
-              <p className="project-type">{type}</p>
-
-              <h3>
-                <a href={`/projects/${number}`}>{title}</a>
-              </h3>
-
-              <p className="project-text">{text}</p>
-
+              <p className="project-type">{type as string}</p>
+              <h3><a data-astro-prefetch href={`/projects/${number}`}>{title as string}</a></h3>
+              <p className="project-text">{text as string}</p>
               <div className="tags">
-                {tags.map(tag => (
+                {(tags as string[]).map((tag: string) => (
                   <span key={tag}>{tag}</span>
                 ))}
               </div>
@@ -240,32 +159,17 @@ export function Home() {
         </div>
 
         <div style={{ textAlign: "center", marginTop: "48px" }}>
-          <a
-            className="talk-link"
-            href="/projects"
-            style={{ display: "inline-block" }}
-          >
+          <a className="talk-link" data-astro-prefetch href="/projects" style={{ display: "inline-block" }}>
             View Full Portfolio <b>↗</b>
           </a>
         </div>
       </section>
 
-      <section
-        className="contact section-pad"
-        id="contact"
-        style={{ borderTop: "1px solid #1d2c3b" }}
-      >
+      {/* ------ Contact Section ------ */}
+      <section className="contact section-pad fade-up delay-3" id="contact" style={{ borderTop: "1px solid #1d2c3b" }}>
         <p className="eyebrow">Start a conversation</p>
-
-        <h2>
-          Have a problem<br />
-          worth solving? <em>Let&apos;s talk.</em>
-        </h2>
-
-        <a
-          className="email"
-          href="mailto:swastickghosh2010@gmail.com"
-        >
+        <h2>Have a problem<br />worth solving? <em>Let&apos;s talk.</em></h2>
+        <a className="email" href="mailto:swastickghosh2010@gmail.com">
           swastickghosh2010@gmail.com <b>↗</b>
         </a>
       </section>

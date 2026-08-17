@@ -1,23 +1,21 @@
 import { useEffect, useState } from "react"
 
-export function Header() {
+export function Header({ pathname }: { pathname: string }) {
   const [progress, setProgress] = useState(0)
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
-  const [currentPath, setCurrentPath] = useState("/")
 
+  // ------ Scroll & Route Handlers ------
   useEffect(() => {
-    // Read the current URL to highlight the active nav link
-    setCurrentPath(window.location.pathname)
+    setMenuOpen(false)
     
     let ticking = false;
-    
     const onScroll = () => {
       if (!ticking) {
         window.requestAnimationFrame(() => {
-          const max = document.documentElement.scrollHeight - innerHeight
-          setProgress(max > 0 ? scrollY / max : 0)
-          setScrolled(scrollY > 12)
+          const max = document.documentElement.scrollHeight - window.innerHeight
+          setProgress(max > 0 ? window.scrollY / max : 0)
+          setScrolled(window.scrollY > 12)
           ticking = false;
         });
         ticking = true;
@@ -27,7 +25,7 @@ export function Header() {
     onScroll()
     window.addEventListener("scroll", onScroll, { passive: true })
     return () => window.removeEventListener("scroll", onScroll)
-  }, [])
+  }, [pathname])
 
   return (
     <>
@@ -35,7 +33,7 @@ export function Header() {
       <header className={`site-header${scrolled ? " scrolled" : ""}`}>
         <div className="header-inner">
           
-          <a className="brand" href="/">
+          <a className="brand" href="/" data-astro-prefetch>
             <span className="brand-prompt">❯</span>
             Swastick
             <span className="brand-cursor">_</span>
@@ -45,10 +43,11 @@ export function Header() {
             {menuOpen ? "✕" : "☰"}
           </button>
 
+          {/* ------ Navigation ------ */}
           <nav aria-label="Primary navigation" className={menuOpen ? "open" : ""}>
-            <a href="/" className={currentPath === "/" ? "active" : ""}>Home</a>
-            <a href="/projects" className={currentPath.startsWith("/projects") ? "active" : ""}>Projects</a>
-            <a href="/about" className={currentPath === "/about" ? "active" : ""}>About</a>
+            <a href="/" data-astro-prefetch className={pathname === "/" ? "active" : ""}>Home</a>
+            <a href="/projects" data-astro-prefetch className={pathname.startsWith("/projects") ? "active" : ""}>Projects</a>
+            <a href="/about" data-astro-prefetch className={pathname === "/about" ? "active" : ""}>About</a>
             <a className="mobile-only" href="mailto:swastickghosh2010@gmail.com">Let&apos;s talk ↗</a>
           </nav>
           

@@ -3,6 +3,7 @@ import { useState, useEffect } from "react"
 export function Footer() {
   const [theme, setTheme] = useState("blue")
 
+  // ------ Theme Management ------
   useEffect(() => {
     const savedTheme = localStorage.getItem("theme") || "blue"
     setTheme(savedTheme)
@@ -35,16 +36,16 @@ export function Footer() {
 
   return (
     <footer>
-      <p>© 2026 Swastick. Built with curiosity.</p>
+      {/* ------ Footer Content & Links ------ */}
+      <p>© {new Date().getFullYear()} Swastick. Built with curiosity.</p>
       <div>
         <button onClick={toggleTheme} style={{background: 'none', border: 'none', color: 'var(--accent)', cursor: 'pointer', fontSize: '11px', padding: 0}}>
           ◐ Theme
         </button>
-        <a href="https://github.com/">GitHub</a>
-        <a href="https://linkedin.com/">LinkedIn</a>
+        <a href="https://github.com/therealsilvex" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a href="https://linkedin.com/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
         <button onClick={() => window.scrollTo(0,0)} style={{background: 'none', border: 'none', color: 'inherit', cursor: 'pointer', fontSize: '11px', padding: 0}}>Top ↑</button>
       </div>
     </footer>
   )
 }
-

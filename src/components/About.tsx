@@ -12,6 +12,7 @@ export function About() {
   
   const cliBodyRef = useRef<HTMLDivElement>(null)
 
+  // ------ CLI Command Handler ------
   const handleCommand = (e: React.FormEvent) => {
     e.preventDefault()
     const cleanCmd = input.trim()
@@ -39,7 +40,7 @@ export function About() {
         )
         break
       case "sudo":
-        response = "Do you use Arch btw?"
+        response = "Haha, Nice try."
         break
       case "echo":
         response = cmdParts.slice(1).join(" ") || " "
@@ -66,6 +67,7 @@ export function About() {
     setInput("")
   }
 
+  // ------ CLI History Navigation ------
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "ArrowUp") {
       e.preventDefault()
@@ -87,21 +89,22 @@ export function About() {
     }
   }
 
+  // ------ CLI Auto-Scroll ------
   useEffect(() => {
-    const timeoutId = setTimeout(() => {
+    requestAnimationFrame(() => {
       if (cliBodyRef.current) {
         cliBodyRef.current.scrollTo({
           top: cliBodyRef.current.scrollHeight,
           behavior: "smooth"
         })
       }
-    }, 10)
-
-    return () => clearTimeout(timeoutId)
+    })
   }, [logs])
 
   return (
-    <div className="about-page section-pad" style={{ paddingTop: "60px" }}>
+    <div className="about-page section-pad fade-up" style={{ paddingTop: "60px" }}>
+      
+      {/* ------ Intro Section ------ */}
       <div className="section-heading" style={{ marginBottom: "48px" }}>
         <p className="eyebrow">About Me</p>
         <h1>How I <em>build.</em></h1>
@@ -110,7 +113,8 @@ export function About() {
         </p>
       </div>
 
-      <div className="cli-terminal" style={{ marginBottom: "80px" }}>
+      {/* ------ CLI Terminal Component ------ */}
+      <div className="cli-terminal fade-up delay-1" style={{ marginBottom: "80px" }}>
         <div className="window-header" style={{ padding: "12px 16px", borderBottom: "1px solid #1e2c3a", display: "flex", gap: "8px" }}>
           <span style={{ width: "10px", height: "10px", background: "#fb726a", borderRadius: "50%" }} />
           <span style={{ width: "10px", height: "10px", background: "#f5bf63", borderRadius: "50%" }} />
@@ -145,7 +149,8 @@ export function About() {
         </div>
       </div>
 
-      <section className="principles-section" style={{ marginBottom: "80px" }}>
+      {/* ------ Principles Grid ------ */}
+      <section className="principles-section fade-up delay-2" style={{ marginBottom: "80px" }}>
         <h2 style={{ fontSize: "28px", color: "#e8edf4", marginBottom: "32px", fontWeight: 400 }}>Principles</h2>
         <div className="principles-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "32px" }}>
           {principles.map(([icon, title, desc]) => (
@@ -158,7 +163,8 @@ export function About() {
         </div>
       </section>
 
-      <section className="toolkit-section" style={{ marginBottom: "80px" }}>
+      {/* ------ Toolkit Grid ------ */}
+      <section className="toolkit-section fade-up delay-2" style={{ marginBottom: "80px" }}>
         <h2 style={{ fontSize: "28px", color: "#e8edf4", marginBottom: "32px", fontWeight: 400 }}>Toolkit</h2>
         <div className="toolkit-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "24px" }}>
           {toolkit.map(([num, title, items]) => (
@@ -171,7 +177,8 @@ export function About() {
         </div>
       </section>
 
-      <section className="roadmap-section" style={{ marginBottom: "80px" }}>
+      {/* ------ Roadmap Section ------ */}
+      <section className="roadmap-section fade-up delay-3" style={{ marginBottom: "80px" }}>
         <h2 style={{ fontSize: "28px", color: "#e8edf4", marginBottom: "32px", fontWeight: 400 }}>Roadmap</h2>
         <div className="roadmap-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "24px" }}>
           {roadmap.map(([num, phase, title, text, pct]) => (
@@ -190,4 +197,3 @@ export function About() {
     </div>
   )
 }
-
