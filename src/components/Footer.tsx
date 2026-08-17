@@ -36,15 +36,17 @@ export function Footer() {
 
   return (
     <footer>
-      {/* ------ Footer Content & Links ------ */}
+      {/* ------ Content ------ */}
       <p>© {new Date().getFullYear()} Swastick. Built with curiosity.</p>
+      
+      {/* ------ Links ------ */}
       <div>
-        <button onClick={toggleTheme} style={{background: 'none', border: 'none', color: 'var(--accent)', cursor: 'pointer', fontSize: '11px', padding: 0}}>
+        <button className="magnetic" onClick={toggleTheme} style={{background: 'none', border: 'none', color: 'var(--accent)', cursor: 'pointer', fontSize: '11px', padding: 0}}>
           ◐ Theme
         </button>
-        <a href="https://github.com/therealsilvex" target="_blank" rel="noopener noreferrer">GitHub</a>
-        <a href="https://linkedin.com/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-        <button onClick={() => window.scrollTo(0,0)} style={{background: 'none', border: 'none', color: 'inherit', cursor: 'pointer', fontSize: '11px', padding: 0}}>Top ↑</button>
+        <a className="magnetic" href="https://github.com/therealsilvex" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a className="magnetic" href="https://linkedin.com/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <button className="magnetic" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} style={{background: 'none', border: 'none', color: 'inherit', cursor: 'pointer', fontSize: '11px', padding: 0}}>Top ↑</button>
       </div>
     </footer>
   )

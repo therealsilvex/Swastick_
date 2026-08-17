@@ -12,7 +12,7 @@ export function About() {
   
   const cliBodyRef = useRef<HTMLDivElement>(null)
 
-  // ------ CLI Command Handler ------
+  // ------ Command Parser ------
   const handleCommand = (e: React.FormEvent) => {
     e.preventDefault()
     const cleanCmd = input.trim()
@@ -40,7 +40,7 @@ export function About() {
         )
         break
       case "sudo":
-        response = "Haha, Nice try."
+        response = "Do you use Arch btw?"
         break
       case "echo":
         response = cmdParts.slice(1).join(" ") || " "
@@ -67,7 +67,7 @@ export function About() {
     setInput("")
   }
 
-  // ------ CLI History Navigation ------
+  // ------ Terminal Navigation ------
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "ArrowUp") {
       e.preventDefault()
@@ -89,7 +89,7 @@ export function About() {
     }
   }
 
-  // ------ CLI Auto-Scroll ------
+  // ------ Terminal Scrolling ------
   useEffect(() => {
     requestAnimationFrame(() => {
       if (cliBodyRef.current) {
@@ -102,9 +102,9 @@ export function About() {
   }, [logs])
 
   return (
-    <div className="about-page section-pad fade-up" style={{ paddingTop: "60px" }}>
+    <div className="about-page section-pad scroll-reveal" style={{ paddingTop: "60px" }}>
       
-      {/* ------ Intro Section ------ */}
+      {/* ------ Introduction ------ */}
       <div className="section-heading" style={{ marginBottom: "48px" }}>
         <p className="eyebrow">About Me</p>
         <h1>How I <em>build.</em></h1>
@@ -113,8 +113,8 @@ export function About() {
         </p>
       </div>
 
-      {/* ------ CLI Terminal Component ------ */}
-      <div className="cli-terminal fade-up delay-1" style={{ marginBottom: "80px" }}>
+      {/* ------ Terminal Application ------ */}
+      <div className="cli-terminal scroll-reveal delay-1" style={{ marginBottom: "80px" }}>
         <div className="window-header" style={{ padding: "12px 16px", borderBottom: "1px solid #1e2c3a", display: "flex", gap: "8px" }}>
           <span style={{ width: "10px", height: "10px", background: "#fb726a", borderRadius: "50%" }} />
           <span style={{ width: "10px", height: "10px", background: "#f5bf63", borderRadius: "50%" }} />
@@ -149,8 +149,8 @@ export function About() {
         </div>
       </div>
 
-      {/* ------ Principles Grid ------ */}
-      <section className="principles-section fade-up delay-2" style={{ marginBottom: "80px" }}>
+      {/* ------ Principles ------ */}
+      <section className="principles-section scroll-reveal delay-2" style={{ marginBottom: "80px" }}>
         <h2 style={{ fontSize: "28px", color: "#e8edf4", marginBottom: "32px", fontWeight: 400 }}>Principles</h2>
         <div className="principles-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "32px" }}>
           {principles.map(([icon, title, desc]) => (
@@ -163,8 +163,8 @@ export function About() {
         </div>
       </section>
 
-      {/* ------ Toolkit Grid ------ */}
-      <section className="toolkit-section fade-up delay-2" style={{ marginBottom: "80px" }}>
+      {/* ------ Toolkit ------ */}
+      <section className="toolkit-section scroll-reveal delay-2" style={{ marginBottom: "80px" }}>
         <h2 style={{ fontSize: "28px", color: "#e8edf4", marginBottom: "32px", fontWeight: 400 }}>Toolkit</h2>
         <div className="toolkit-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "24px" }}>
           {toolkit.map(([num, title, items]) => (
@@ -177,8 +177,8 @@ export function About() {
         </div>
       </section>
 
-      {/* ------ Roadmap Section ------ */}
-      <section className="roadmap-section fade-up delay-3" style={{ marginBottom: "80px" }}>
+      {/* ------ Roadmap ------ */}
+      <section className="roadmap-section scroll-reveal delay-3" style={{ marginBottom: "80px" }}>
         <h2 style={{ fontSize: "28px", color: "#e8edf4", marginBottom: "32px", fontWeight: 400 }}>Roadmap</h2>
         <div className="roadmap-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "24px" }}>
           {roadmap.map(([num, phase, title, text, pct]) => (

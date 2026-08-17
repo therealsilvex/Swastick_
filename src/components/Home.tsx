@@ -6,7 +6,7 @@ export function Home() {
   const [typedText, setTypedText] = useState("")
   const [isBlinking, setIsBlinking] = useState(false)
 
-  // ------ Role Typing Animation ------
+  // ------ Typing Sequence ------
   useEffect(() => {
     let roleIdx = 0
     let currentText = ""
@@ -60,8 +60,10 @@ export function Home() {
       <section className="hero section-pad">
         <div className="hero-glow" aria-hidden="true" />
 
-        <div className="hero-copy fade-up">
-          <p className="eyebrow"><i />Actively building & learning</p>
+        <div className="hero-copy scroll-reveal">
+          <div className="status-pill">
+            <span className="status-dot"></span> Available for new opportunities
+          </div>
 
           <h1>
             Hi, I&apos;m Swastick.<br />
@@ -72,7 +74,7 @@ export function Home() {
               </span>
 
               <span style={{ gridArea: "1 / 1" }}>
-                <em className="typed">{typedText}</em>
+                <em className="typed shimmer-text">{typedText}</em>
                 <span className={`cursor ${isBlinking ? "blinking" : ""}`}>|</span>
               </span>
             </span>
@@ -85,39 +87,41 @@ export function Home() {
           </p>
 
           <div className="hero-actions" style={{ marginTop: "32px", display: "flex", gap: "24px", alignItems: "center" }}>
-            <a className="primary-button" data-astro-prefetch href="/projects" style={{ display: "inline-block" }}>
+            <a className="primary-button magnetic" data-astro-prefetch href="/projects" style={{ display: "inline-block" }}>
               See my work <b>↓</b>
             </a>
-            <a className="text-button" data-astro-prefetch href="/about">
+            <a className="text-button magnetic" data-astro-prefetch href="/about">
               About Me <b>↗</b>
             </a>
           </div>
         </div>
 
-        <aside className="code-window float fade-up delay-1" aria-label="Developer profile">
-          <div className="code-top">
-            <span className="dots"><i /><i /><i /></span>
-            <span>swastick.py</span>
-            <span className="live-pill">● live</span>
-          </div>
+        <div className="scroll-reveal delay-1" style={{ position: "relative", zIndex: 1, width: "100%", maxWidth: "362px", marginTop: "39px" }}>
+          <aside className="code-window float" aria-label="Developer profile" style={{ marginTop: 0 }}>
+            <div className="code-top">
+              <span className="dots"><i /><i /><i /></span>
+              <span>swastick.py</span>
+              <span className="live-pill">● live</span>
+            </div>
 
-          <div className="code-content">
-            <p className="comment"># the short version</p>
-            <p><b className="purple">class</b> <b className="blue">Developer</b>:</p>
-            <p className="indent"><b className="purple">def</b> <span className="blue">focus</span>(self):</p>
-            <p className="indent2"><b className="purple">return</b> <span className="yellow">&quot;Python + problem<br />solving&quot;</span></p>
-            <p className="indent"><b className="purple">def</b> <span className="blue">mindset</span>(self):</p>
-            <p className="indent2"><b className="purple">return</b> <span className="pink">&quot;always<br />learning&quot;</span><span className="cursor blinking">_</span></p>
-          </div>
+            <div className="code-content">
+              <p className="comment"># the short version</p>
+              <p><b className="purple">class</b> <b className="blue">Developer</b>:</p>
+              <p className="indent"><b className="purple">def</b> <span className="blue">focus</span>(self):</p>
+              <p className="indent2"><b className="purple">return</b> <span className="yellow">&quot;Python + problem<br />solving&quot;</span></p>
+              <p className="indent"><b className="purple">def</b> <span className="blue">mindset</span>(self):</p>
+              <p className="indent2"><b className="purple">return</b> <span className="pink">&quot;always<br />learning&quot;</span><span className="cursor blinking">_</span></p>
+            </div>
 
-          <div className="code-footer">
-            ›_ &nbsp; Python · Linux · Developer tooling
-          </div>
-        </aside>
+            <div className="code-footer">
+              ›_ &nbsp; Python · Linux · Developer tooling
+            </div>
+          </aside>
+        </div>
       </section>
 
       {/* ------ Interests Ticker ------ */}
-      <section className="ticker fade-up delay-2" aria-label="Interests">
+      <section className="ticker scroll-reveal delay-2" aria-label="Interests">
         <div className="ticker-track">
           {[0, 1].map(copy => (
             <div className="ticker-group" key={copy} aria-hidden={copy === 1}>
@@ -130,7 +134,7 @@ export function Home() {
       </section>
 
       {/* ------ Featured Projects ------ */}
-      <section className="section-pad work-section fade-up delay-2">
+      <section className="section-pad work-section scroll-reveal delay-2">
         <div className="section-heading">
           <div>
             <p className="eyebrow">Featured projects</p>
@@ -159,17 +163,17 @@ export function Home() {
         </div>
 
         <div style={{ textAlign: "center", marginTop: "48px" }}>
-          <a className="talk-link" data-astro-prefetch href="/projects" style={{ display: "inline-block" }}>
+          <a className="talk-link magnetic" data-astro-prefetch href="/projects" style={{ display: "inline-block" }}>
             View Full Portfolio <b>↗</b>
           </a>
         </div>
       </section>
 
       {/* ------ Contact Section ------ */}
-      <section className="contact section-pad fade-up delay-3" id="contact" style={{ borderTop: "1px solid #1d2c3b" }}>
+      <section className="contact section-pad scroll-reveal delay-3" id="contact" style={{ borderTop: "1px solid #1d2c3b" }}>
         <p className="eyebrow">Start a conversation</p>
         <h2>Have a problem<br />worth solving? <em>Let&apos;s talk.</em></h2>
-        <a className="email" href="mailto:swastickghosh2010@gmail.com">
+        <a className="email email-copy magnetic" href="mailto:swastickghosh2010@gmail.com" style={{ display: "inline-block" }}>
           swastickghosh2010@gmail.com <b>↗</b>
         </a>
       </section>

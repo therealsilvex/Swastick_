@@ -5,7 +5,7 @@ export function Header({ pathname }: { pathname: string }) {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
 
-  // ------ Scroll & Route Handlers ------
+  // ------ Handlers ------
   useEffect(() => {
     setMenuOpen(false)
     
@@ -33,12 +33,14 @@ export function Header({ pathname }: { pathname: string }) {
       <header className={`site-header${scrolled ? " scrolled" : ""}`}>
         <div className="header-inner">
           
+          {/* ------ Branding ------ */}
           <a className="brand" href="/" data-astro-prefetch>
             <span className="brand-prompt">❯</span>
             Swastick
             <span className="brand-cursor">_</span>
           </a>
 
+          {/* ------ Mobile Controls ------ */}
           <button className="mobile-toggle" onClick={() => setMenuOpen(!menuOpen)}>
             {menuOpen ? "✕" : "☰"}
           </button>
@@ -51,7 +53,7 @@ export function Header({ pathname }: { pathname: string }) {
             <a className="mobile-only" href="mailto:swastickghosh2010@gmail.com">Let&apos;s talk ↗</a>
           </nav>
           
-          <a className="talk-link desktop-only" href="mailto:swastickghosh2010@gmail.com">Let&apos;s talk <b>↗</b></a>
+          <a className="talk-link desktop-only magnetic" href="mailto:swastickghosh2010@gmail.com">Let&apos;s talk <b>↗</b></a>
         </div>
       </header>
     </>
