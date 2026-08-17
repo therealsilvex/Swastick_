@@ -56,6 +56,42 @@ const previewImage = `${siteUrl}/preview-image.png`;
 
     <!-- ------ Global Scripts ------ -->
     <script is:inline>
+      // ------ Easter Eggs ------
+      function initEasterEggs() {
+        if (!window.hasEasterEggs) {
+          window.hasEasterEggs = true;
+
+          console.info(
+            "%c ❯ Hello Visitor. \n\n%c Ah, looking under the hood? I respect that.\n If you're a recruiter or fellow developer, let's skip the queue.\n\n ↗ Email me directly: swastickghosh2010@gmail.com\n\n",
+            "color: #6fe3cf; font-size: 18px; font-weight: bold; font-family: monospace;",
+            "color: #a1b3c9; font-size: 13px; font-family: monospace; line-height: 1.6;"
+          );
+
+          const konami = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+          let kIdx = 0;
+          
+          document.addEventListener('keydown', (e) => {
+            if (e.key === konami[kIdx]) {
+              kIdx++;
+              if (kIdx === konami.length) {
+                kIdx = 0;
+                
+                const root = document.documentElement;
+                root.style.setProperty("--accent", "#00ff41");
+                root.style.setProperty("--mint", "#00ff41");
+                document.body.style.background = "#000";
+                
+                console.info("%c ❯ 30 Lives.", "color: #00ff41; font-size: 14px; font-weight: bold;");
+                alert("30 Lives!");
+                window.open("https://www.youtube.com/watch?v=dQw4w9WgXcQ", "_blank");
+              }
+            } else {
+              kIdx = 0;
+            }
+          });
+        }
+      }
+
       // ------ Theme Initialization ------
       function restoreTheme() {
         const savedTheme = localStorage.getItem("theme") || "blue";
@@ -84,6 +120,9 @@ const previewImage = `${siteUrl}/preview-image.png`;
           document.addEventListener('mousemove', (e) => {
             document.documentElement.style.setProperty('--mouse-x', `${e.clientX}px`);
             document.documentElement.style.setProperty('--mouse-y', `${e.clientY}px`);
+            if (cursor) {
+              cursor.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0)`;
+            }
           }, { passive: true });
 
           document.querySelectorAll('a, button, .magnetic').forEach(el => {
@@ -128,6 +167,8 @@ const previewImage = `${siteUrl}/preview-image.png`;
       }
 
       restoreTheme();
+      initEasterEggs();
+      
       document.addEventListener("astro:page-load", () => {
         restoreTheme();
         initPolish();
