@@ -423,13 +423,19 @@ em {
 
 .typed { background: linear-gradient(90deg, var(--accent), var(--mint)); -webkit-background-clip: text; }
 
+/* ------ Shimmer Text ------ */
 .shimmer-text { 
-  background: linear-gradient(90deg, var(--accent) 0%, #a9c8ff 25%, var(--mint) 50%, #a9c8ff 75%, var(--accent) 100%); 
+  background: linear-gradient(to right, var(--accent), var(--mint), var(--accent)); 
   background-size: 200% auto;
   color: transparent;
   -webkit-background-clip: text;
   background-clip: text;
-  animation: shimmerAnim 4s linear infinite;
+  animation: shimmerAnim 6s ease-in-out infinite alternate;
+}
+
+@keyframes shimmerAnim {
+  0% { background-position: 0% center; }
+  100% { background-position: 100% center; }
 }
 
 @keyframes shimmerAnim {
