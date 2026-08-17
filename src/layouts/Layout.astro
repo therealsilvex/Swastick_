@@ -36,6 +36,22 @@ const previewImage = `${siteUrl}/preview-image.png`;
     <meta name="description" content={description} />
     <link rel="canonical" href={`${siteUrl}${Astro.url.pathname}`} />
 
+    <!-- ------ Open Graph ------ -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={`${siteUrl}${Astro.url.pathname}`} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={previewImage} />
+    <meta property="og:image:alt" content="Swastick_ | Python Developer & Problem Solver" />
+    <meta property="og:site_name" content="Swastick_" />
+
+    <!-- ------ Twitter / X ------ -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={previewImage} />
+    <meta name="twitter:image:alt" content="Swastick_ | Python Developer & Problem Solver" />
+
     <ClientRouter />
 
     <!-- ------ Global Scripts ------ -->
