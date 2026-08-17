@@ -1,0 +1,112 @@
+---
+import '../styles/index.css';
+import '@fontsource-variable/jetbrains-mono';
+import '@fontsource/merriweather/400.css';
+import '@fontsource/merriweather/400-italic.css';
+import { Header } from '../components/Header';
+import { Footer } from '../components/Footer';
+import { ClientRouter } from 'astro:transitions';
+
+const {
+  title = "Swastick_ | Portfolio",
+  description = "Portfolio of Swastick Ghosh."
+} = Astro.props;
+
+const siteUrl = "https://silvex.pages.dev";
+const previewImage = `${siteUrl}/preview-image.png`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- ------ Icons ------ -->
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <!-- ------ Verification ------ -->
+    <meta name="google-site-verification" content="WM6Xef65Rl-MYswNtTRKnzvJYAZ2-43BiiUcuWeSbG8" />
+
+    <!-- ------ SEO ------ -->
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={`${siteUrl}${Astro.url.pathname}`} />
+
+    <!-- ------ Open Graph ------ -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={`${siteUrl}${Astro.url.pathname}`} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={previewImage} />
+    <meta property="og:image:alt" content="Swastick_ | Python Developer & Problem Solver" />
+    <meta property="og:site_name" content="Swastick_" />
+
+    <!-- ------ Twitter / X ------ -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={previewImage} />
+    <meta name="twitter:image:alt" content="Swastick_ | Python Developer & Problem Solver" />
+
+    <ClientRouter />
+
+    <!-- ------ Global Scripts ------ -->
+    <script is:inline>
+      // ------ Theme Initialization ------
+      function restoreTheme() {
+        const savedTheme = localStorage.getItem("theme") || "blue";
+        const root = document.documentElement;
+
+        if (savedTheme === "purple") {
+          root.style.setProperty("--accent", "#dd91f0");
+          root.style.setProperty("--mint", "#f39b9d");
+        } else if (savedTheme === "green") {
+          root.style.setProperty("--accent", "#59d99f");
+          root.style.setProperty("--mint", "#f5d56f");
+        } else {
+          root.style.removeProperty("--accent");
+          root.style.removeProperty("--mint");
+        }
+      }
+
+      // ------ UI Engine ------
+      function initPolish() {
+        document.querySelectorAll('.email-copy').forEach(el => {
+          el.addEventListener('click', (e) => {
+            e.preventDefault();
+            navigator.clipboard.writeText("swastickghosh2010@gmail.com");
+            const originalHTML = el.innerHTML;
+            el.innerHTML = "Copied! ✓";
+            el.style.color = "var(--mint)";
+
+            setTimeout(() => {
+              el.innerHTML = originalHTML;
+              el.style.color = "";
+            }, 2000);
+          });
+        });
+      }
+
+      restoreTheme();
+      document.addEventListener("astro:page-load", () => {
+        restoreTheme();
+        initPolish();
+      });
+    </script>
+  </head>
+
+  <body>
+    <!-- ------ Application Root ------ -->
+    <div class="site-shell" id="top">
+      <Header pathname={Astro.url.pathname} client:load />
+      <main>
+        <slot />
+      </main>
+      <Footer client:visible />
+    </div>
+  </body>
+</html>
