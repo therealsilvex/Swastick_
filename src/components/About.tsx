@@ -40,7 +40,7 @@ export function About() {
         )
         break
       case "sudo":
-        response = "Do you use Arch btw?"
+        response = "Haha, Nice Try!"
         break
       case "echo":
         response = cmdParts.slice(1).join(" ") || " "
