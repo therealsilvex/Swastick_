@@ -22,21 +22,19 @@ const previewImage = `${siteUrl}/preview-image.png`;
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- ------ Icons ------ -->
+    <link rel="preconnect" href="https://static.cloudflareinsights.com" crossorigin />
+
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
     
-    <!-- ------ Verification ------ -->
     <meta name="google-site-verification" content="WM6Xef65Rl-MYswNtTRKnzvJYAZ2-43BiiUcuWeSbG8" />
     
-    <!-- ------ SEO ------ -->
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={`${siteUrl}${Astro.url.pathname}`} />
 
-    <!-- ------ Open Graph ------ -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content={`${siteUrl}${Astro.url.pathname}`} />
     <meta property="og:title" content={title} />
@@ -45,7 +43,6 @@ const previewImage = `${siteUrl}/preview-image.png`;
     <meta property="og:image:alt" content="Swastick_ | Python Developer & Problem Solver" />
     <meta property="og:site_name" content="Swastick_" />
 
-    <!-- ------ Twitter / X ------ -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
@@ -54,7 +51,6 @@ const previewImage = `${siteUrl}/preview-image.png`;
 
     <ClientRouter />
 
-    <!-- ------ Speculation Rules API ------ -->
     <script type="speculationrules">
       {
         "prerender": [
@@ -71,14 +67,11 @@ const previewImage = `${siteUrl}/preview-image.png`;
       }
     </script>
 
-    <!-- ------ Global Scripts ------ -->
     <script is:inline>
-      // ------ Easter Eggs ------
       function initEasterEggs() {
         if (!window.hasEasterEggs) {
           window.hasEasterEggs = true;
 
-          // 1. DevTools Welcome Message
           setTimeout(() => {
             console.info(
               "%c ❯ Hello Visitor. \n\n%c Ah, looking under the hood? I respect that.\n If you're a recruiter or fellow developer, let's skip the queue.\n\n ↗ Email me directly: swastickghosh2010@gmail.com\n\n",
@@ -88,9 +81,8 @@ const previewImage = `${siteUrl}/preview-image.png`;
           }, 1500);
 
           function triggerRetroMode() {
-            if (sessionStorage.getItem("retroMode") === "true") return; // Prevent double firing
+            if (sessionStorage.getItem("retroMode") === "true") return;
             
-            // Lock state into session storage so it survives page changes
             sessionStorage.setItem("retroMode", "true");
             document.documentElement.classList.add("retro-mode");
             
@@ -99,7 +91,6 @@ const previewImage = `${siteUrl}/preview-image.png`;
             window.open("https://www.youtube.com/watch?v=dQw4w9WgXcQ", "_blank");
           }
 
-          // 2. Keyboard Konami Code
           const konami = ['arrowup', 'arrowup', 'arrowdown', 'arrowdown', 'arrowleft', 'arrowright', 'arrowleft', 'arrowright', 'b', 'a'];
           let kIdx = 0;
           
@@ -116,7 +107,6 @@ const previewImage = `${siteUrl}/preview-image.png`;
             }
           });
 
-          // 3. Mobile Easter Egg Bypass: Rapidly tap the logo 7 times
           let tapCount = 0;
           let tapTimer;
           document.addEventListener('click', (e) => {
@@ -141,9 +131,7 @@ const previewImage = `${siteUrl}/preview-image.png`;
         }
       }
 
-      // ------ Theme Initialization ------
       function restoreTheme() {
-        // If the Easter Egg is active, re-apply the class and block the normal themes
         if (sessionStorage.getItem("retroMode") === "true") {
           document.documentElement.classList.add("retro-mode");
           return; 
@@ -164,60 +152,88 @@ const previewImage = `${siteUrl}/preview-image.png`;
         }
       }
       
-      // ------ UI Engine ------
       function initPolish() {
-        const cursor = document.getElementById('custom-cursor');
         const isDesktop = window.matchMedia("(pointer: fine)").matches;
 
-        if (isDesktop) {
-          document.body.classList.add('has-custom-cursor');
+        if (!isDesktop) return;
 
-          document.addEventListener('mousemove', (e) => {
-            document.documentElement.style.setProperty('--mouse-x', `${e.clientX}px`);
-            document.documentElement.style.setProperty('--mouse-y', `${e.clientY}px`);
-            if (cursor) {
-              cursor.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0)`;
-            }
-          }, { passive: true });
+        document.body.classList.add('has-custom-cursor');
+        if (window.__polishInitialized) return;
+        window.__polishInitialized = true;
 
-          document.querySelectorAll('a, button, .magnetic').forEach(el => {
-            el.addEventListener('mouseenter', () => cursor?.classList.add('hovering'));
-            el.addEventListener('mouseleave', () => cursor?.classList.remove('hovering'));
-          });
+        let activeMagnetic = null;
+        let magneticRect = null;
+        let pointerX = 0;
+        let pointerY = 0;
+        let frameId = 0;
 
-          document.querySelectorAll('.magnetic').forEach(btn => {
-            let rect = null;
+        const renderPointer = () => {
+          frameId = 0;
 
-            btn.addEventListener('mouseenter', () => {
-              rect = btn.getBoundingClientRect();
-            });
+          document.documentElement.style.setProperty('--mouse-x', `${pointerX}px`);
+          document.documentElement.style.setProperty('--mouse-y', `${pointerY}px`);
 
-            btn.addEventListener('mousemove', (e) => {
-              if (!rect) rect = btn.getBoundingClientRect();
-              const x = (e.clientX - rect.left - rect.width / 2) * 0.3;
-              const y = (e.clientY - rect.top - rect.height / 2) * 0.3;
-              btn.style.transform = `translate3d(${x}px, ${y}px, 0)`;
-            }, { passive: true });
+          if (activeMagnetic && magneticRect) {
+            const x = (pointerX - magneticRect.left - magneticRect.width / 2) * 0.3;
+            const y = (pointerY - magneticRect.top - magneticRect.height / 2) * 0.3;
+            activeMagnetic.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+          }
+        };
 
-            btn.addEventListener('mouseleave', () => {
-              rect = null;
-              btn.style.transform = 'translate3d(0, 0, 0)';
-            });
-          });
-        }
+        document.addEventListener('pointermove', (e) => {
+          pointerX = e.clientX;
+          pointerY = e.clientY;
 
-        document.querySelectorAll('.email-copy').forEach(el => {
-          el.addEventListener('click', (e) => {
-            e.preventDefault();
-            navigator.clipboard.writeText("swastickghosh2010@gmail.com");
-            const originalHTML = el.innerHTML;
-            el.innerHTML = "Copied! ✓";
-            el.style.color = "var(--mint)";
-            setTimeout(() => {
-              el.innerHTML = originalHTML;
-              el.style.color = "";
-            }, 2000);
-          });
+          if (!frameId) frameId = requestAnimationFrame(renderPointer);
+        }, { passive: true });
+
+        document.addEventListener('pointerover', (e) => {
+          const target = e.target instanceof Element ? e.target : null;
+          if (!target) return;
+
+          const interactive = target.closest('a, button, .magnetic');
+          if (interactive) {
+            document.getElementById('custom-cursor')?.classList.add('hovering');
+          }
+
+          const magnetic = target.closest('.magnetic');
+          if (magnetic && !(e.relatedTarget instanceof Node && magnetic.contains(e.relatedTarget))) {
+            activeMagnetic = magnetic;
+            magneticRect = magnetic.getBoundingClientRect();
+          }
+        }, { passive: true });
+
+        document.addEventListener('pointerout', (e) => {
+          const target = e.target instanceof Element ? e.target : null;
+          const related = e.relatedTarget instanceof Node ? e.relatedTarget : null;
+
+          if (target?.closest('a, button, .magnetic') &&
+              !(related instanceof Element && target.closest('a, button, .magnetic')?.contains(related))) {
+            document.getElementById('custom-cursor')?.classList.remove('hovering');
+          }
+
+          if (activeMagnetic && !activeMagnetic.contains(related)) {
+            activeMagnetic.style.transform = 'translate3d(0, 0, 0)';
+            activeMagnetic = null;
+            magneticRect = null;
+          }
+        }, { passive: true });
+
+        document.addEventListener('click', (e) => {
+          const target = e.target instanceof Element ? e.target.closest('.email-copy') : null;
+          if (!target) return;
+
+          e.preventDefault();
+          navigator.clipboard.writeText("swastickghosh2010@gmail.com");
+
+          const originalHTML = target.innerHTML;
+          target.innerHTML = "Copied! ✓";
+          target.style.color = "var(--mint)";
+
+          setTimeout(() => {
+            target.innerHTML = originalHTML;
+            target.style.color = "";
+          }, 2000);
         });
       }
 
@@ -232,10 +248,8 @@ const previewImage = `${siteUrl}/preview-image.png`;
   </head>
 
   <body>
-    <!-- ------ Custom Cursor ------ -->
     <div id="custom-cursor"></div>
     
-    <!-- ------ Application Root ------ -->
     <div class="site-shell" id="top">
       <Header pathname={Astro.url.pathname} client:load />
       <main>
@@ -247,7 +261,6 @@ const previewImage = `${siteUrl}/preview-image.png`;
 </html>
 
 <style is:global>
-  /* ------ Drastic Easter Egg Overrides ------ */
   html.retro-mode body, 
   html.retro-mode .site-shell {
     background: #000 !important;
@@ -258,7 +271,6 @@ const previewImage = `${siteUrl}/preview-image.png`;
     --mint: #39ff14 !important;   
   }
   
-  /* Force all standard text to neon green */
   html.retro-mode p, 
   html.retro-mode h1, 
   html.retro-mode h2, 
@@ -275,7 +287,6 @@ const previewImage = `${siteUrl}/preview-image.png`;
     border-bottom-color: #ff00ff !important;
   }
   
-  /* Force cards and code blocks to match */
   html.retro-mode .project-card,
   html.retro-mode .code-window,
   html.retro-mode .cli-terminal {
