@@ -430,6 +430,7 @@ em {
   letter-spacing: -.02em; 
 }
 
+/* Original untouched shimmer text */
 .typed { background: linear-gradient(90deg, var(--accent), var(--mint)); -webkit-background-clip: text; }
 
 .shimmer-text { 
@@ -444,6 +445,10 @@ em {
 @keyframes shimmerAnim {
   0% { background-position: 0% center; }
   100% { background-position: 100% center; }
+}
+
+@keyframes shimmerAnim {
+  to { background-position: 200% center; }
 }
 
 .cursor { 
