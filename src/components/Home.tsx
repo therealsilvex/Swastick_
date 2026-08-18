@@ -6,7 +6,6 @@ export function Home() {
   const [typedText, setTypedText] = useState("")
   const [isBlinking, setIsBlinking] = useState(false)
 
-  // ------ Typing Sequence ------
   useEffect(() => {
     let roleIdx = 0
     let currentText = ""
@@ -56,7 +55,6 @@ export function Home() {
   return (
     <div className="home-page">
       
-      {/* ------ Hero Section ------ */}
       <section className="hero section-pad">
         <div className="hero-glow" aria-hidden="true" />
 
@@ -120,7 +118,6 @@ export function Home() {
         </div>
       </section>
 
-      {/* ------ Interests Ticker ------ */}
       <section className="ticker scroll-reveal delay-1" aria-label="Interests">
         <div className="ticker-track">
           {[0, 1].map(copy => (
@@ -133,7 +130,6 @@ export function Home() {
         </div>
       </section>
 
-      {/* ------ Featured Projects ------ */}
       <section className="section-pad work-section scroll-reveal delay-1">
         <div className="section-heading">
           <div>
@@ -169,7 +165,6 @@ export function Home() {
         </div>
       </section>
 
-      {/* ------ Contact Section ------ */}
       <section className="contact section-pad scroll-reveal delay-1" id="contact" style={{ borderTop: "1px solid #1d2c3b" }}>
         <p className="eyebrow">Start a conversation</p>
         <h2>Have a problem<br />worth solving? <em>Let&apos;s talk.</em></h2>
