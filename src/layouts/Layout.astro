@@ -23,18 +23,26 @@ const previewImage = `${siteUrl}/preview-image.png`;
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <link rel="preconnect" href="https://static.cloudflareinsights.com" crossorigin />
+    
+    <!-- ------ CRITICAL FONT PRELOADS (Fixes 0.051 CLS Penalty) ------ -->
+    <link rel="preload" href="/_astro/jetbrains-mono-latin-wght-normal.B9CIFXIH.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+    <link rel="preload" href="/_astro/merriweather-latin-400-italic.CuD3zK4B.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
 
+    <!-- ------ Icons ------ -->
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
     
+    <!-- ------ Verification ------ -->
     <meta name="google-site-verification" content="WM6Xef65Rl-MYswNtTRKnzvJYAZ2-43BiiUcuWeSbG8" />
     
+    <!-- ------ SEO ------ -->
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={`${siteUrl}${Astro.url.pathname}`} />
 
+    <!-- ------ Open Graph ------ -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content={`${siteUrl}${Astro.url.pathname}`} />
     <meta property="og:title" content={title} />
@@ -43,6 +51,7 @@ const previewImage = `${siteUrl}/preview-image.png`;
     <meta property="og:image:alt" content="Swastick_ | Python Developer & Problem Solver" />
     <meta property="og:site_name" content="Swastick_" />
 
+    <!-- ------ Twitter / X ------ -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
@@ -51,6 +60,7 @@ const previewImage = `${siteUrl}/preview-image.png`;
 
     <ClientRouter />
 
+    <!-- ------ Speculation Rules API ------ -->
     <script type="speculationrules">
       {
         "prerender": [
@@ -67,6 +77,7 @@ const previewImage = `${siteUrl}/preview-image.png`;
       }
     </script>
 
+    <!-- ------ Global Scripts ------ -->
     <script is:inline>
       function initEasterEggs() {
         if (!window.hasEasterEggs) {
