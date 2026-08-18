@@ -54,6 +54,23 @@ const previewImage = `${siteUrl}/preview-image.png`;
 
     <ClientRouter />
 
+    <!-- ------ Speculation Rules API ------ -->
+    <script type="speculationrules">
+      {
+        "prerender": [
+          {
+            "source": "document",
+            "where": {
+              "and": [
+                { "href_matches": "/*" }
+              ]
+            },
+            "eagerness": "moderate"
+          }
+        ]
+      }
+    </script>
+
     <!-- ------ Global Scripts ------ -->
     <script is:inline>
       // ------ Easter Eggs ------
