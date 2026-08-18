@@ -24,7 +24,7 @@ const previewImage = `${siteUrl}/preview-image.png`;
 
     <link rel="preconnect" href="https://static.cloudflareinsights.com" crossorigin />
     
-    <!-- ------ CRITICAL FONT PRELOAD (Fixes CLS without choking LCP) ------ -->
+    <!-- ------ CRITICAL FONT PRELOAD ------ -->
     <link rel="preload" href="/_astro/jetbrains-mono-latin-wght-normal.B9CIFXIH.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
 
     <!-- ------ Icons ------ -->
@@ -58,6 +58,23 @@ const previewImage = `${siteUrl}/preview-image.png`;
     <meta name="twitter:image:alt" content="Swastick_ | Python Developer & Problem Solver" />
 
     <ClientRouter />
+
+    <!-- ------ Speculation Rules API (Restored) ------ -->
+    <script type="speculationrules">
+      {
+        "prerender": [
+          {
+            "source": "document",
+            "where": {
+              "and": [
+                { "href_matches": "/*" }
+              ]
+            },
+            "eagerness": "moderate"
+          }
+        ]
+      }
+    </script>
 
     <!-- ------ Global Scripts ------ -->
     <script is:inline>
