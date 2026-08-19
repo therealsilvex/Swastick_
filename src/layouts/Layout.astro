@@ -59,7 +59,7 @@ const previewImage = `${siteUrl}/preview-image.png`;
 
     <ClientRouter />
 
-    <!-- ------ Speculation Rules API (Restored) ------ -->
+    <!-- ------ Speculation Rules API ------ -->
     <script type="speculationrules">
       {
         "prerender": [
@@ -165,72 +165,16 @@ const previewImage = `${siteUrl}/preview-image.png`;
       }
       
       function initPolish() {
-        const isDesktop = window.matchMedia("(pointer: fine)").matches;
-
-        //if (!isDesktop) return;
-
-        document.body.classList.add('has-custom-cursor');
         if (window.__polishInitialized) return;
         window.__polishInitialized = true;
 
-        let activeMagnetic = null;
-        let magneticRect = null;
-        let pointerX = 0;
-        let pointerY = 0;
-        let frameId = 0;
-
-        const renderPointer = () => {
-          frameId = 0;
-
-          document.documentElement.style.setProperty('--mouse-x', `${pointerX}px`);
-          document.documentElement.style.setProperty('--mouse-y', `${pointerY}px`);
-
-          if (activeMagnetic && magneticRect) {
-            const x = (pointerX - magneticRect.left - magneticRect.width / 2) * 0.3;
-            const y = (pointerY - magneticRect.top - magneticRect.height / 2) * 0.3;
-            activeMagnetic.style.transform = `translate3d(${x}px, ${y}px, 0)`;
-          }
-        };
-
+        // Lightweight tracker just for the background radial glow
         document.addEventListener('pointermove', (e) => {
-          pointerX = e.clientX;
-          pointerY = e.clientY;
-
-          if (!frameId) frameId = requestAnimationFrame(renderPointer);
+          document.documentElement.style.setProperty('--mouse-x', `${e.clientX}px`);
+          document.documentElement.style.setProperty('--mouse-y', `${e.clientY}px`);
         }, { passive: true });
 
-        document.addEventListener('pointerover', (e) => {
-          const target = e.target instanceof Element ? e.target : null;
-          if (!target) return;
-
-          const interactive = target.closest('a, button, .magnetic');
-          if (interactive) {
-            document.getElementById('custom-cursor')?.classList.add('hovering');
-          }
-
-          const magnetic = target.closest('.magnetic');
-          if (magnetic && !(e.relatedTarget instanceof Node && magnetic.contains(e.relatedTarget))) {
-            activeMagnetic = magnetic;
-            magneticRect = magnetic.getBoundingClientRect();
-          }
-        }, { passive: true });
-
-        document.addEventListener('pointerout', (e) => {
-          const target = e.target instanceof Element ? e.target : null;
-          const related = e.relatedTarget instanceof Node ? e.relatedTarget : null;
-
-          if (target?.closest('a, button, .magnetic') &&
-              !(related instanceof Element && target.closest('a, button, .magnetic')?.contains(related))) {
-            document.getElementById('custom-cursor')?.classList.remove('hovering');
-          }
-
-          if (activeMagnetic && !activeMagnetic.contains(related)) {
-            activeMagnetic.style.transform = 'translate3d(0, 0, 0)';
-            activeMagnetic = null;
-            magneticRect = null;
-          }
-        }, { passive: true });
-
+        // Email copy interaction
         document.addEventListener('click', (e) => {
           const target = e.target instanceof Element ? e.target.closest('.email-copy') : null;
           if (!target) return;
@@ -260,9 +204,6 @@ const previewImage = `${siteUrl}/preview-image.png`;
   </head>
 
   <body>
-    <!-- ------ Custom Cursor ------ -->
-    <div id="custom-cursor"></div>
-    
     <!-- ------ Application Root ------ -->
     <div class="site-shell" id="top">
       <Header pathname={Astro.url.pathname} client:idle />
