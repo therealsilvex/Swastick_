@@ -1,6 +1,6 @@
 # Portfolio
 
-My personal portfolio site: https://silvex.pages.dev
+
 
 ## Commands
 - Start local dev server: `npm run dev`
